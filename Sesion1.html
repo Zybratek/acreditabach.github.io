@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque 6.1 – Estrategias de Comprensión Lectora</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf6ee;
+    --cream: #f2ead8;
+    --accent: #c0392b;
+    --gold: #b5860d;
+    --soft: #7a6a52;
+    --correct: #2e7d32;
+    --wrong: #c0392b;
+    --highlight: #fff3cd;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.04) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.04) 40px);
+  }
+  header .badge {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px; position: relative;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 36px);
+    line-height: 1.2; position: relative;
+  }
+  header p {
+    margin-top: 8px; font-size: 14px; color: #ccc; position: relative;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: var(--cream); border-bottom: 1px solid #ddd;
+    padding: 14px 40px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .progress-track {
+    flex: 1; height: 6px; background: #ddd; border-radius: 3px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent); border-radius: 3px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .progress-label { font-size: 13px; color: var(--soft); white-space: nowrap; }
+
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 36px 24px 80px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    background: var(--ink); color: var(--paper);
+    padding: 12px 20px; border-radius: 4px 4px 0 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-header .num {
+    background: var(--accent); color: white;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* TEXT BOX */
+  .text-box {
+    background: white; border: 1px solid #ddd; border-top: none;
+    padding: 24px 28px; border-radius: 0 0 4px 4px;
+    margin-bottom: 28px;
+    line-height: 1.8; font-size: 15px;
+  }
+  .text-box .label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 10px;
+    display: block;
+  }
+  .text-box p { margin-bottom: 12px; }
+  .text-box p:last-child { margin-bottom: 0; }
+  .text-box strong { color: var(--accent); }
+
+  /* QUESTION */
+  .question-card {
+    background: white; border: 1px solid #e0d8cc;
+    border-radius: 6px; padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+  }
+  .question-card.answered { background: #fefefe; }
+
+  .q-number {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--soft); margin-bottom: 8px; display: block;
+  }
+  .q-text {
+    font-size: 15.5px; line-height: 1.6; font-weight: 600;
+    margin-bottom: 18px; color: var(--ink);
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border: 1.5px solid #ddd;
+    border-radius: 5px; cursor: pointer;
+    transition: all 0.18s; background: var(--paper);
+    font-size: 14.5px; line-height: 1.5;
+  }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: #fff5f5; }
+  .option .letter {
+    font-weight: 700; color: var(--soft);
+    min-width: 22px; font-size: 13px; margin-top: 1px;
+  }
+  .option.correct { border-color: var(--correct); background: #e8f5e9; }
+  .option.correct .letter { color: var(--correct); }
+  .option.wrong { border-color: var(--wrong); background: #ffebee; }
+  .option.wrong .letter { color: var(--wrong); }
+  .option.disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 14px; padding: 12px 16px; border-radius: 5px;
+    font-size: 14px; line-height: 1.6; display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #e8f5e9; border-left: 4px solid var(--correct); color: #1b5e20; }
+  .feedback.fail { background: #ffebee; border-left: 4px solid var(--wrong); color: #7f0000; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+
+  /* CONCEPT BOX */
+  .concept-box {
+    background: var(--highlight); border: 1px solid #f0c040;
+    border-radius: 6px; padding: 18px 22px; margin: 28px 0;
+  }
+  .concept-box .ct { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; display: block; font-weight: 600; }
+  .concept-box p { font-size: 14px; line-height: 1.7; }
+
+  /* DIVIDER */
+  .topic-divider {
+    border: none; border-top: 2px solid var(--ink);
+    margin: 44px 0 32px; opacity: 0.08;
+  }
+  .topic-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--soft); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .topic-title::after {
+    content: ''; flex: 1; height: 1px; background: #ddd;
+  }
+
+  /* SCORE */
+  #score-panel {
+    display: none;
+    background: var(--ink); color: var(--paper);
+    border-radius: 8px; padding: 40px; text-align: center;
+    margin-top: 40px;
+  }
+  #score-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; margin-bottom: 8px;
+  }
+  #score-panel .big-score {
+    font-size: 72px; font-weight: 900; color: var(--gold);
+    line-height: 1; margin: 20px 0;
+    font-family: 'Playfair Display', serif;
+  }
+  #score-panel p { color: #ccc; font-size: 15px; margin-bottom: 6px; }
+  #score-panel .msg { font-size: 18px; color: white; margin: 16px 0 28px; }
+
+  .btn-restart {
+    background: var(--accent); color: white;
+    border: none; padding: 14px 36px; border-radius: 4px;
+    font-size: 15px; cursor: pointer; font-family: inherit;
+    letter-spacing: 1px; transition: background 0.2s;
+  }
+  .btn-restart:hover { background: #a93226; }
+
+  /* SUBMIT */
+  #submit-area {
+    text-align: center; margin-top: 40px; display: none;
+  }
+  .btn-submit {
+    background: var(--ink); color: var(--paper);
+    border: none; padding: 16px 48px; border-radius: 4px;
+    font-size: 16px; cursor: pointer; font-family: inherit;
+    letter-spacing: 1px; transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #333; }
+
+  @media(max-width:600px){
+    header { padding: 20px; }
+    main { padding: 20px 14px 60px; }
+    .text-box, .question-card { padding: 18px; }
+    .progress-bar-wrap { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Acredita Bach · NEM · Español</div>
+  <h1>Bloque 6.1 — Estrategias de Comprensión Lectora</h1>
+  <p>Clase práctica estilo examen · 10 reactivos de opción múltiple</p>
+  <br>  
+  <div class="badge">Ing. B. Stiff Chim Pech</div>
+</header>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progreso</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-label" id="progressText">0 / 10</span>
+</div>
+
+<main>
+
+  <!-- ─── TEMA 6.1.1 ─── -->
+  <div class="topic-title">6.1.1 · Título del texto expositivo</div>
+
+  <div class="section-header"><span class="num">A</span> Lee el siguiente texto y responde:</div>
+  <div class="text-box">
+    <span class="label">Texto 1</span>
+    <p>El agua es uno de los recursos más importantes del planeta. Sin ella, la vida no sería posible. Nuestro cuerpo está compuesto en un 60% por agua, la utilizamos para cocinar, limpiar y producir energía. Sin embargo, en muchas regiones del mundo el agua potable escasea. Cada año millones de personas no tienen acceso a agua limpia y esto provoca enfermedades graves. Por eso, es urgente cuidar y no desperdiciar este recurso vital.</p>
+  </div>
+
+  <div class="concept-box">
+    <span class="ct">💡 Recuerda</span>
+    <p>El <strong>título de un texto expositivo</strong> debe reflejar la <strong>idea principal</strong> del texto de forma clara y directa. No debe ser ni demasiado vago ni demasiado específico.</p>
+  </div>
+
+  <div class="question-card" id="q1">
+    <span class="q-number">Reactivo 1 de 10</span>
+    <p class="q-text">¿Cuál sería el título más adecuado para el texto anterior?</p>
+    <div class="options">
+      <div class="option" onclick="answer(1,'A')"><span class="letter">A)</span> Los ríos y los mares del mundo</div>
+      <div class="option" onclick="answer(1,'B')"><span class="letter">B)</span> La importancia del agua y la necesidad de cuidarla</div>
+      <div class="option" onclick="answer(1,'C')"><span class="letter">C)</span> Cómo cocinar con agua</div>
+      <div class="option" onclick="answer(1,'D')"><span class="letter">D)</span> Enfermedades causadas por la falta de lluvia</div>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <div class="question-card" id="q2">
+    <span class="q-number">Reactivo 2 de 10</span>
+    <p class="q-text">Un estudiante leyó un texto sobre los efectos del calentamiento global en los polos. El título que eligió fue: <em>"El clima en invierno"</em>. ¿Por qué este título <strong>no</strong> es adecuado para un texto expositivo?</p>
+    <div class="options">
+      <div class="option" onclick="answer(2,'A')"><span class="letter">A)</span> Porque es demasiado largo y confuso</div>
+      <div class="option" onclick="answer(2,'B')"><span class="letter">B)</span> Porque no refleja la idea principal del texto</div>
+      <div class="option" onclick="answer(2,'C')"><span class="letter">C)</span> Porque los textos expositivos no llevan título</div>
+      <div class="option" onclick="answer(2,'D')"><span class="letter">D)</span> Porque habla de invierno y el texto habla de verano</div>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <hr class="topic-divider">
+
+  <!-- ─── TEMA 6.1.2 ─── -->
+  <div class="topic-title">6.1.2 · Relaciones lógicas entre oraciones</div>
+
+  <div class="section-header"><span class="num">B</span> Lee las siguientes oraciones y responde:</div>
+  <div class="text-box">
+    <span class="label">Texto 2</span>
+    <p><strong>Oración 1:</strong> El precio de la gasolina subió considerablemente este mes.</p>
+    <p><strong>Oración 2:</strong> <em>Por lo tanto</em>, muchas personas prefieren usar transporte público.</p>
+    <br>
+    <p><strong>Oración 3:</strong> El nuevo parque tiene juegos para niños, jardines y una cancha deportiva.</p>
+    <p><strong>Oración 4:</strong> <em>Por ejemplo</em>, la cancha ya fue usada por tres equipos de futbol esta semana.</p>
+  </div>
+
+  <div class="concept-box">
+    <span class="ct">💡 Recuerda</span>
+    <p><strong>Relación de causalidad:</strong> una oración es causa o consecuencia de otra (palabras clave: <em>por lo tanto, porque, entonces, en consecuencia</em>).<br>
+    <strong>Relación de ejemplificación:</strong> una oración ilustra o ejemplifica lo dicho antes (palabras clave: <em>por ejemplo, como, tal es el caso</em>).</p>
+  </div>
+
+  <div class="question-card" id="q3">
+    <span class="q-number">Reactivo 3 de 10</span>
+    <p class="q-text">¿Qué tipo de relación lógica existe entre las oraciones 1 y 2?</p>
+    <div class="options">
+      <div class="option" onclick="answer(3,'A')"><span class="letter">A)</span> Ejemplificación</div>
+      <div class="option" onclick="answer(3,'B')"><span class="letter">B)</span> Descripción</div>
+      <div class="option" onclick="answer(3,'C')"><span class="letter">C)</span> Causalidad</div>
+      <div class="option" onclick="answer(3,'D')"><span class="letter">D)</span> Comparación</div>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <div class="question-card" id="q4">
+    <span class="q-number">Reactivo 4 de 10</span>
+    <p class="q-text">¿Qué tipo de relación existe entre las oraciones 3 y 4?</p>
+    <div class="options">
+      <div class="option" onclick="answer(4,'A')"><span class="letter">A)</span> Causalidad</div>
+      <div class="option" onclick="answer(4,'B')"><span class="letter">B)</span> Ejemplificación</div>
+      <div class="option" onclick="answer(4,'C')"><span class="letter">C)</span> Contradicción</div>
+      <div class="option" onclick="answer(4,'D')"><span class="letter">D)</span> Secuencia temporal</div>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <div class="question-card" id="q5">
+    <span class="q-number">Reactivo 5 de 10</span>
+    <p class="q-text">Completa la oración: <em>"Llovió mucho durante tres días; ________, el río se desbordó."</em> ¿Qué palabra o frase indica una relación de causalidad?</p>
+    <div class="options">
+      <div class="option" onclick="answer(5,'A')"><span class="letter">A)</span> por ejemplo</div>
+      <div class="option" onclick="answer(5,'B')"><span class="letter">B)</span> sin embargo</div>
+      <div class="option" onclick="answer(5,'C')"><span class="letter">C)</span> en consecuencia</div>
+      <div class="option" onclick="answer(5,'D')"><span class="letter">D)</span> también</div>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <hr class="topic-divider">
+
+  <!-- ─── TEMA 6.1.3 ─── -->
+  <div class="topic-title">6.1.3 · Jerarquía de la información en mapas conceptuales</div>
+
+  <div class="section-header"><span class="num">C</span> Observa la siguiente información y responde:</div>
+  <div class="text-box">
+    <span class="label">Información para organizar en mapa conceptual</span>
+    <p>Tema general: <strong>Los animales vertebrados</strong></p>
+    <p>Datos:</p>
+    <p>• Son animales con columna vertebral<br>
+    • Se dividen en: mamíferos, aves, reptiles, anfibios y peces<br>
+    • Los mamíferos incluyen al perro, el gato y la ballena<br>
+    • Las aves incluyen al águila y al loro</p>
+  </div>
+
+  <div class="concept-box">
+    <span class="ct">💡 Recuerda</span>
+    <p>En un mapa conceptual la información va <strong>de lo general a lo particular</strong>: el concepto más amplio va arriba (o al centro) y los ejemplos o detalles específicos van abajo (o en las ramas externas).</p>
+  </div>
+
+  <div class="question-card" id="q6">
+    <span class="q-number">Reactivo 6 de 10</span>
+    <p class="q-text">En un mapa conceptual sobre los animales vertebrados, ¿cuál concepto debe aparecer en el nivel más alto (o central)?</p>
+    <div class="options">
+      <div class="option" onclick="answer(6,'A')"><span class="letter">A)</span> El perro</div>
+      <div class="option" onclick="answer(6,'B')"><span class="letter">B)</span> Los mamíferos</div>
+      <div class="option" onclick="answer(6,'C')"><span class="letter">C)</span> Los animales vertebrados</div>
+      <div class="option" onclick="answer(6,'D')"><span class="letter">D)</span> La ballena</div>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <div class="question-card" id="q7">
+    <span class="q-number">Reactivo 7 de 10</span>
+    <p class="q-text">Un alumno organizó su mapa así: en el centro puso "el perro" y de ahí derivó "mamíferos" y luego "vertebrados". ¿Cuál es el error de este mapa?</p>
+    <div class="options">
+      <div class="option" onclick="answer(7,'A')"><span class="letter">A)</span> Usa demasiados ejemplos</div>
+      <div class="option" onclick="answer(7,'B')"><span class="letter">B)</span> La jerarquía está invertida: puso lo particular antes que lo general</div>
+      <div class="option" onclick="answer(7,'C')"><span class="letter">C)</span> No incluyó a las aves</div>
+      <div class="option" onclick="answer(7,'D')"><span class="letter">D)</span> Los mapas conceptuales no deben tener ejemplos</div>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <hr class="topic-divider">
+
+  <!-- ─── TEMA 6.1.4 ─── -->
+  <div class="topic-title">6.1.4 · Tipos de formas textuales de comunicación</div>
+
+  <div class="section-header"><span class="num">D</span> Lee los siguientes fragmentos y responde:</div>
+  <div class="text-box">
+    <span class="label">Fragmento I</span>
+    <p><em>"La novela Cien años de soledad, de Gabriel García Márquez, narra la historia de la familia Buendía a lo largo de varias generaciones. La obra mezcla realidad y fantasía de manera magistral. Es, sin duda, una de las obras más importantes de la literatura latinoamericana y una lectura obligada para cualquier aficionado a la buena literatura."</em></p>
+  </div>
+  <div class="text-box">
+    <span class="label">Fragmento II</span>
+    <p><em>"El texto explora el tema de la soledad en la vida moderna. El autor utiliza un lenguaje sencillo y ejemplos cotidianos para explicar cómo la tecnología, aunque nos conecta, también puede aislarnos. La estructura del texto es clara: introducción, desarrollo y conclusión. Se retoman las ideas centrales al final."</em></p>
+  </div>
+
+  <div class="concept-box">
+    <span class="ct">💡 Recuerda</span>
+    <p>
+    • <strong>Resumen:</strong> versión breve y objetiva del contenido de un texto.<br>
+    • <strong>Reseña:</strong> descripción + opinión o valoración sobre una obra.<br>
+    • <strong>Relato simple:</strong> narración de hechos en orden.<br>
+    • <strong>Comentario crítico:</strong> análisis y juicio fundamentado sobre un texto.</p>
+  </div>
+
+  <div class="question-card" id="q8">
+    <span class="q-number">Reactivo 8 de 10</span>
+    <p class="q-text">¿A qué tipo de forma textual corresponde el Fragmento I?</p>
+    <div class="options">
+      <div class="option" onclick="answer(8,'A')"><span class="letter">A)</span> Resumen</div>
+      <div class="option" onclick="answer(8,'B')"><span class="letter">B)</span> Relato simple</div>
+      <div class="option" onclick="answer(8,'C')"><span class="letter">C)</span> Reseña</div>
+      <div class="option" onclick="answer(8,'D')"><span class="letter">D)</span> Comentario crítico</div>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <div class="question-card" id="q9">
+    <span class="q-number">Reactivo 9 de 10</span>
+    <p class="q-text">El Fragmento II describe la estructura y el contenido de un texto de forma objetiva, sin emitir una opinión personal del autor. ¿Qué tipo de forma textual es?</p>
+    <div class="options">
+      <div class="option" onclick="answer(9,'A')"><span class="letter">A)</span> Reseña</div>
+      <div class="option" onclick="answer(9,'B')"><span class="letter">B)</span> Comentario crítico</div>
+      <div class="option" onclick="answer(9,'C')"><span class="letter">C)</span> Resumen</div>
+      <div class="option" onclick="answer(9,'D')"><span class="letter">D)</span> Relato simple</div>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <div class="question-card" id="q10">
+    <span class="q-number">Reactivo 10 de 10</span>
+    <p class="q-text">¿Cuál de las siguientes características es <strong>exclusiva</strong> del comentario crítico y lo diferencia del resumen?</p>
+    <div class="options">
+      <div class="option" onclick="answer(10,'A')"><span class="letter">A)</span> Menciona el tema principal del texto</div>
+      <div class="option" onclick="answer(10,'B')"><span class="letter">B)</span> Incluye el análisis y la opinión fundamentada del autor</div>
+      <div class="option" onclick="answer(10,'C')"><span class="letter">C)</span> Es más corto que el texto original</div>
+      <div class="option" onclick="answer(10,'D')"><span class="letter">D)</span> Usa lenguaje formal</div>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div id="submit-area">
+    <button class="btn-submit" onclick="showScore()">Ver mi calificación final</button>
+  </div>
+
+  <!-- SCORE PANEL -->
+  <div id="score-panel">
+    <h2>Resultado Final</h2>
+    <div class="big-score" id="scoreNum">0/10</div>
+    <p id="scorePct"></p>
+    <p class="msg" id="scoreMsg"></p>
+    <button class="btn-restart" onclick="restart()">↺ Volver a intentarlo</button>
+  </div>
+
+</main>
+
+<script>
+const ANSWERS = {
+  1: { correct: 'B', explanation: '✅ Correcto. El título "La importancia del agua y la necesidad de cuidarla" recoge la idea principal del texto: la importancia del agua y la urgencia de cuidarla. Los otros títulos son demasiado generales, específicos o no corresponden al contenido.' },
+  2: { correct: 'B', explanation: '✅ Correcto. Un buen título expositivo debe reflejar la idea central del texto. "El clima en invierno" es demasiado vago y no comunica que el texto trata sobre los efectos del calentamiento global en los polos.' },
+  3: { correct: 'C', explanation: '✅ Correcto. Es una relación de causalidad: el alza en el precio de la gasolina (causa) produce que las personas prefieran el transporte público (consecuencia). La palabra clave es "por lo tanto".' },
+  4: { correct: 'B', explanation: '✅ Correcto. La oración 4 pone un ejemplo concreto (la cancha usada por equipos) de lo afirmado en la oración 3 (que el parque tiene instalaciones). La palabra clave es "por ejemplo".' },
+  5: { correct: 'C', explanation: '✅ Correcto. "En consecuencia" indica que el desbordamiento del río es el resultado o consecuencia de las lluvias. Es una relación de causalidad.' },
+  6: { correct: 'C', explanation: '✅ Correcto. En un mapa conceptual la información va de lo general a lo particular. "Los animales vertebrados" es el concepto más amplio y debe estar en el nivel más alto.' },
+  7: { correct: 'B', explanation: '✅ Correcto. El error es que la jerarquía está invertida. En un mapa conceptual se parte de lo general (vertebrados) hacia lo particular (mamíferos) y luego a los ejemplos (perro). No al revés.' },
+  8: { correct: 'C', explanation: '✅ Correcto. El Fragmento I es una reseña porque describe el contenido de la novela y emite una valoración personal: "Es, sin duda, una de las obras más importantes..." y "lectura obligada".' },
+  9: { correct: 'C', explanation: '✅ Correcto. El Fragmento II es un resumen: describe el contenido y la estructura del texto de forma objetiva, sin incluir opinión personal del que escribe.' },
+  10: { correct: 'B', explanation: '✅ Correcto. El comentario crítico se distingue del resumen porque incluye el análisis y la opinión argumentada del autor sobre el texto. El resumen solo expone el contenido de manera objetiva.' }
+};
+
+const WRONG_MSG = {
+  1: '❌ No es correcta. Recuerda: el título debe capturar la idea MÁS IMPORTANTE del texto completo, no solo un aspecto parcial. Vuelve a leer el texto: habla del agua en general y de la urgencia de cuidarla.',
+  2: '❌ No es correcta. El problema no es la longitud ni si habla de invierno o verano. El problema es que el título no comunica el tema real del texto.',
+  3: '❌ No es correcta. Observa la palabra "por lo tanto": esa es la clave. Indica que una idea es consecuencia de la otra. Eso es causalidad.',
+  4: '❌ No es correcta. Fíjate en la palabra "por ejemplo". Esa expresión introduce un caso concreto que ilustra lo dicho antes.',
+  5: '❌ No es correcta. Necesitas una palabra que indique resultado o consecuencia. "Por ejemplo" ejemplifica, "sin embargo" contrasta, "también" suma ideas. Solo una indica consecuencia.',
+  6: '❌ No es correcta. Recuerda: en un mapa conceptual se empieza por lo más general. ¿Qué concepto engloba a todos los demás?',
+  7: '❌ No es correcta. El error no está en la cantidad de ejemplos ni en los tipos de animales incluidos. El problema es el orden jerárquico.',
+  8: '❌ No es correcta. ¿El fragmento solo describe o también opina? Busca frases que expresen una valoración personal del escritor.',
+  9: '❌ No es correcta. ¿Hay alguna opinión del escritor en el Fragmento II? Si no hay opinión ni valoración, no puede ser reseña ni comentario crítico.',
+  10: '❌ No es correcta. Mencionar el tema, ser breve o usar lenguaje formal son características que comparten varios tipos de texto. Piensa: ¿qué hace ÚNICO al comentario crítico?'
+};
+
+let answered = {};
+let score = 0;
+
+function answer(qNum, selected) {
+  if (answered[qNum]) return;
+  answered[qNum] = selected;
+
+  const card = document.getElementById('q' + qNum);
+  const feedback = document.getElementById('fb' + qNum);
+  const options = card.querySelectorAll('.option');
+  const letters = ['A','B','C','D'];
+  const correct = ANSWERS[qNum].correct;
+
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (letters[i] === correct) opt.classList.add('correct');
+    if (letters[i] === selected && selected !== correct) opt.classList.add('wrong');
+  });
+
+  if (selected === correct) {
+    score++;
+    feedback.className = 'feedback show ok';
+    feedback.innerHTML = '<strong>¡Correcto!</strong>' + ANSWERS[qNum].explanation.replace('✅ Correcto. ','');
+  } else {
+    feedback.className = 'feedback show fail';
+    feedback.innerHTML = '<strong>No es correcto.</strong> ' + WRONG_MSG[qNum].replace('❌ No es correcta. ','');
+  }
+
+  card.classList.add('answered');
+  updateProgress();
+
+  if (Object.keys(answered).length === 10) {
+    document.getElementById('submit-area').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('submit-area').scrollIntoView({behavior:'smooth'});
+    }, 300);
+  }
+}
+
+function updateProgress() {
+  const n = Object.keys(answered).length;
+  document.getElementById('progressFill').style.width = (n * 10) + '%';
+  document.getElementById('progressText').textContent = n + ' / 10';
+}
+
+function showScore() {
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  document.getElementById('submit-area').style.display = 'none';
+  document.getElementById('scoreNum').textContent = score + '/10';
+  const pct = score * 10;
+  document.getElementById('scorePct').textContent = pct + '% de respuestas correctas';
+  let msg = '';
+  if (score >= 9) msg = '¡Excelente! Dominas estos temas. Estás listo para el examen.';
+  else if (score >= 7) msg = '¡Muy bien! Repasa los temas en los que fallaste y estarás listo.';
+  else if (score >= 5) msg = 'Vas por buen camino. Revisa las explicaciones de las respuestas incorrectas.';
+  else msg = 'No te desanimes. Lee con calma las retroalimentaciones y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent = msg;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function restart() {
+  answered = {};
+  score = 0;
+  updateProgress();
+
+  for (let i = 1; i <= 10; i++) {
+    const card = document.getElementById('q' + i);
+    const fb = document.getElementById('fb' + i);
+    card.classList.remove('answered');
+    fb.className = 'feedback';
+    fb.innerHTML = '';
+    card.querySelectorAll('.option').forEach(o => {
+      o.classList.remove('correct','wrong','disabled');
+    });
+  }
+
+  document.getElementById('score-panel').style.display = 'none';
+  document.getElementById('submit-area').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

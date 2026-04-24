@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque 6.1 – Comprensión Lectora · Versión 2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1923;
+    --surface: #162030;
+    --card: #1c2a3a;
+    --border: #2a3f55;
+    --accent: #e8a020;
+    --accent2: #3eb8a0;
+    --text: #e8e0d4;
+    --soft: #8899aa;
+    --correct: #3eb8a0;
+    --wrong: #e05050;
+    --highlight: #1e2e20;
+    --highlight2: #2a1a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0a1520 0%, #162030 60%, #1a2535 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 32px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: 'V2';
+    position: absolute; right: 36px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 96px; color: rgba(232,160,32,0.06);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #0f1923;
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; padding: 4px 12px;
+    border-radius: 2px; margin-bottom: 14px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 3.5vw, 34px);
+    line-height: 1.25; color: var(--text);
+  }
+  header p { margin-top: 8px; font-size: 13px; color: var(--soft); }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 16px 40px; display: flex; align-items: center; gap: 16px;
+  }
+  .p-label { font-size: 12px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; }
+  .p-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .p-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 0.5s ease; }
+  .p-count { font-size: 13px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  /* MAIN */
+  main { max-width: 840px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* TOPIC LABEL */
+  .topic-label {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .topic-label .tag {
+    background: var(--accent); color: #0f1923;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+    white-space: nowrap;
+  }
+  .topic-label .line { flex: 1; height: 1px; background: var(--border); }
+  .topic-label span:last-child { font-size: 12px; color: var(--soft); letter-spacing: 1px; white-space: nowrap; }
+
+  /* TEXT BOX */
+  .text-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px; padding: 22px 26px; margin-bottom: 22px;
+    line-height: 1.8; font-size: 14.5px; color: var(--text);
+  }
+  .text-box .lbl {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent2); font-weight: 600; margin-bottom: 12px; display: block;
+  }
+  .text-box p { margin-bottom: 10px; }
+  .text-box p:last-child { margin-bottom: 0; }
+  .text-box em { color: #aaccdd; font-style: italic; }
+  .text-box strong { color: var(--accent); }
+
+  /* CONCEPT */
+  .concept {
+    background: #131e14; border: 1px solid #2a4030;
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px; padding: 16px 20px; margin-bottom: 24px;
+    font-size: 13.5px; line-height: 1.7; color: #a8c8b8;
+  }
+  .concept .ct {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent2); font-weight: 700; margin-bottom: 8px; display: block;
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 24px; margin-bottom: 18px;
+    transition: border-color 0.2s;
+  }
+  .q-card.answered { border-color: #2a3f55; }
+  .q-num { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--soft); margin-bottom: 10px; display: block; }
+  .q-text { font-size: 15px; line-height: 1.6; font-weight: 500; margin-bottom: 18px; }
+
+  /* OPTIONS */
+  .opts { display: flex; flex-direction: column; gap: 9px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border: 1px solid var(--border);
+    border-radius: 5px; cursor: pointer; background: var(--surface);
+    font-size: 14px; line-height: 1.5; color: var(--text);
+    transition: all 0.15s;
+  }
+  .opt:hover:not(.disabled) { border-color: var(--accent); background: #1e2a38; color: white; }
+  .opt .lt { font-weight: 600; color: var(--soft); min-width: 22px; font-size: 12px; margin-top: 1px; }
+  .opt.correct { border-color: var(--correct); background: var(--highlight); color: #a8e8d8; }
+  .opt.correct .lt { color: var(--correct); }
+  .opt.wrong { border-color: var(--wrong); background: var(--highlight2); color: #f0a0a0; }
+  .opt.wrong .lt { color: var(--wrong); }
+  .opt.disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .fb { margin-top: 14px; padding: 12px 16px; border-radius: 5px; font-size: 13.5px; line-height: 1.6; display: none; }
+  .fb.show { display: block; }
+  .fb.ok { background: #0e2218; border-left: 3px solid var(--correct); color: #90d4be; }
+  .fb.fail { background: #220e0e; border-left: 3px solid var(--wrong); color: #e8a8a8; }
+  .fb strong { display: block; margin-bottom: 4px; font-size: 13px; letter-spacing: 0.5px; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0 32px; }
+
+  /* SCORE */
+  #score-panel {
+    display: none; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 44px; text-align: center; margin-top: 40px;
+  }
+  #score-panel h2 { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--soft); margin-bottom: 4px; }
+  .big-num { font-family: 'DM Serif Display', serif; font-size: 80px; color: var(--accent); line-height: 1; margin: 20px 0 8px; }
+  #pct { font-size: 14px; color: var(--soft); margin-bottom: 8px; }
+  #msg { font-size: 16px; color: var(--text); margin: 16px 0 30px; line-height: 1.6; }
+
+  /* BREAKDOWN */
+  .breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0 30px; text-align: left; }
+  .bd-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; }
+  .bd-item .bd-topic { font-size: 11px; color: var(--accent2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .bd-item .bd-score { font-size: 22px; font-weight: 600; color: var(--text); }
+  .bd-item .bd-label { font-size: 11px; color: var(--soft); }
+
+  .btn-r {
+    background: var(--accent); color: #0f1923;
+    border: none; padding: 14px 40px; border-radius: 4px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    letter-spacing: 1px; text-transform: uppercase; transition: opacity 0.2s;
+  }
+  .btn-r:hover { opacity: 0.85; }
+
+  #submit-area { text-align: center; margin-top: 40px; display: none; }
+  .btn-s {
+    background: transparent; color: var(--accent); border: 2px solid var(--accent);
+    padding: 14px 44px; border-radius: 4px; font-size: 14px; font-weight: 700;
+    cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-s:hover { background: var(--accent); color: #0f1923; }
+
+  @media(max-width:600px){
+    header { padding: 22px 18px; }
+    .progress-wrap { padding: 12px 16px; }
+    main { padding: 24px 14px 60px; }
+    .q-card, .text-box { padding: 18px; }
+    .breakdown { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Ejercicio 2 · Práctica continua</div>
+  <h1>Bloque 6.1 — Estrategias de Comprensión Lectora</h1>
+  <p>Acredita Bach · NEM · Español</p>
+  <br>
+  <div class="badge">Ing. B. Stiff Chim Pech</div>
+</header>
+
+<div class="progress-wrap">
+  <span class="p-label">Avance</span>
+  <div class="p-track"><div class="p-fill" id="pFill"></div></div>
+  <span class="p-count" id="pCount">0 / 10</span>
+</div>
+
+<main>
+
+  <!-- 6.1.1 -->
+  <div class="topic-label">
+    <span class="tag">6.1.1</span>
+    <div class="line"></div>
+    <span>Título del texto expositivo</span>
+  </div>
+
+  <div class="text-box">
+    <span class="lbl">Texto 1 — Lee con atención</span>
+    <p>Dormir bien no es un lujo, es una necesidad biológica. Durante el sueño, el cerebro elimina toxinas acumuladas durante el día, consolida la memoria y repara tejidos. Los adultos necesitan entre 7 y 9 horas de sueño por noche. Sin embargo, el uso excesivo de pantallas antes de dormir, el estrés y los horarios irregulares están reduciendo la calidad del sueño en millones de personas. Las consecuencias incluyen problemas de concentración, irritabilidad y mayor riesgo de enfermedades crónicas.</p>
+  </div>
+
+  <div class="concept">
+    <span class="ct">💡 Recuerda</span>
+    El título de un texto expositivo debe resumir la <strong>idea principal</strong> de todo el texto, no solo de una parte. Debe ser claro, informativo y representar el contenido completo.
+  </div>
+
+  <div class="q-card" id="q1">
+    <span class="q-num">Reactivo 1 de 10</span>
+    <p class="q-text">¿Cuál es el título más adecuado para el Texto 1?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(1,'A')"><span class="lt">A)</span> Cómo usar el teléfono antes de dormir</div>
+      <div class="opt" onclick="ans(1,'B')"><span class="lt">B)</span> El sueño: una necesidad vital y sus consecuencias si se descuida</div>
+      <div class="opt" onclick="ans(1,'C')"><span class="lt">C)</span> Los sueños y su relación con la memoria</div>
+      <div class="opt" onclick="ans(1,'D')"><span class="lt">D)</span> Enfermedades causadas por el estrés laboral</div>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+
+  <div class="q-card" id="q2">
+    <span class="q-num">Reactivo 2 de 10</span>
+    <p class="q-text">Una persona leyó un artículo sobre la contaminación del aire en las ciudades y eligió el título: <em>"El medio ambiente"</em>. ¿Cuál es el problema con ese título?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(2,'A')"><span class="lt">A)</span> Es demasiado técnico para un texto expositivo</div>
+      <div class="opt" onclick="ans(2,'B')"><span class="lt">B)</span> Es demasiado general: no refleja el tema específico del texto</div>
+      <div class="opt" onclick="ans(2,'C')"><span class="lt">C)</span> Tiene palabras que no corresponden al contenido</div>
+      <div class="opt" onclick="ans(2,'D')"><span class="lt">D)</span> Los textos expositivos no deben tener título</div>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6.1.2 -->
+  <div class="topic-label">
+    <span class="tag">6.1.2</span>
+    <div class="line"></div>
+    <span>Relaciones lógicas entre oraciones</span>
+  </div>
+
+  <div class="text-box">
+    <span class="lbl">Texto 2 — Oraciones para analizar</span>
+    <p><strong>Par A</strong></p>
+    <p>Oración 1: Este mes hubo fuertes lluvias en la región serrana.</p>
+    <p>Oración 2: <em>Como resultado</em>, varios caminos quedaron bloqueados por derrumbes.</p>
+    <br>
+    <p><strong>Par B</strong></p>
+    <p>Oración 3: Existen varias formas de ahorrar energía en el hogar.</p>
+    <p>Oración 4: <em>Por ejemplo</em>, apagar las luces al salir de un cuarto o desconectar los aparatos que no se usan.</p>
+    <br>
+    <p><strong>Par C</strong></p>
+    <p>Oración 5: María estudió toda la semana para su examen.</p>
+    <p>Oración 6: <em>Por esa razón</em>, obtuvo la calificación más alta del grupo.</p>
+  </div>
+
+  <div class="concept">
+    <span class="ct">💡 Recuerda</span>
+    <strong>Causalidad:</strong> una idea es causa o consecuencia de la otra (<em>porque, por lo tanto, en consecuencia, como resultado, por esa razón</em>).<br>
+    <strong>Ejemplificación:</strong> la segunda idea ilustra con un caso concreto (<em>por ejemplo, como, tal es el caso de</em>).
+  </div>
+
+  <div class="q-card" id="q3">
+    <span class="q-num">Reactivo 3 de 10</span>
+    <p class="q-text">¿Qué relación lógica existe en el <strong>Par A</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(3,'A')"><span class="lt">A)</span> Ejemplificación</div>
+      <div class="opt" onclick="ans(3,'B')"><span class="lt">B)</span> Comparación</div>
+      <div class="opt" onclick="ans(3,'C')"><span class="lt">C)</span> Causalidad</div>
+      <div class="opt" onclick="ans(3,'D')"><span class="lt">D)</span> Descripción</div>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+
+  <div class="q-card" id="q4">
+    <span class="q-num">Reactivo 4 de 10</span>
+    <p class="q-text">¿Qué relación lógica existe en el <strong>Par B</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(4,'A')"><span class="lt">A)</span> Causalidad</div>
+      <div class="opt" onclick="ans(4,'B')"><span class="lt">B)</span> Ejemplificación</div>
+      <div class="opt" onclick="ans(4,'C')"><span class="lt">C)</span> Contradicción</div>
+      <div class="opt" onclick="ans(4,'D')"><span class="lt">D)</span> Secuencia temporal</div>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <div class="q-card" id="q5">
+    <span class="q-num">Reactivo 5 de 10</span>
+    <p class="q-text">En el <strong>Par C</strong>, ¿cuál es la causa y cuál es la consecuencia?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(5,'A')"><span class="lt">A)</span> La causa es obtener buena calificación; la consecuencia es estudiar</div>
+      <div class="opt" onclick="ans(5,'B')"><span class="lt">B)</span> Ambas oraciones son consecuencias de un hecho anterior</div>
+      <div class="opt" onclick="ans(5,'C')"><span class="lt">C)</span> La causa es estudiar toda la semana; la consecuencia es obtener la calificación más alta</div>
+      <div class="opt" onclick="ans(5,'D')"><span class="lt">D)</span> Las oraciones no tienen relación lógica entre sí</div>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6.1.3 -->
+  <div class="topic-label">
+    <span class="tag">6.1.3</span>
+    <div class="line"></div>
+    <span>Jerarquía de la información en mapas conceptuales</span>
+  </div>
+
+  <div class="text-box">
+    <span class="lbl">Información para organizar</span>
+    <p>Tema: <strong>Las plantas</strong></p>
+    <p>• Las plantas son seres vivos que producen su propio alimento mediante la fotosíntesis<br>
+    • Se clasifican en: plantas con flores (angiospermas) y plantas sin flores (gimnospermas, helechos, musgos)<br>
+    • Las angiospermas incluyen: el rosal, el manzano y el girasol<br>
+    • Los helechos crecen en lugares húmedos y con sombra</p>
+  </div>
+
+  <div class="concept">
+    <span class="ct">💡 Recuerda</span>
+    Un mapa conceptual organiza la información de <strong>lo más general → a lo más específico</strong>. El concepto central es el más amplio; las ramas siguientes son categorías; al final van los ejemplos concretos.
+  </div>
+
+  <div class="q-card" id="q6">
+    <span class="q-num">Reactivo 6 de 10</span>
+    <p class="q-text">En un mapa conceptual sobre las plantas, ¿en qué nivel debe colocarse "el rosal"?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(6,'A')"><span class="lt">A)</span> En el nivel más alto, como concepto central</div>
+      <div class="opt" onclick="ans(6,'B')"><span class="lt">B)</span> En el segundo nivel, junto a "plantas con flores"</div>
+      <div class="opt" onclick="ans(6,'C')"><span class="lt">C)</span> En el nivel más específico, como ejemplo de angiospermas</div>
+      <div class="opt" onclick="ans(6,'D')"><span class="lt">D)</span> No debe aparecer en un mapa conceptual</div>
+    </div>
+    <div class="fb" id="fb6"></div>
+  </div>
+
+  <div class="q-card" id="q7">
+    <span class="q-num">Reactivo 7 de 10</span>
+    <p class="q-text">¿Cuál de las siguientes opciones representa el orden jerárquico correcto para el mapa conceptual de las plantas?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(7,'A')"><span class="lt">A)</span> Rosal → Angiospermas → Plantas con flores → Las plantas</div>
+      <div class="opt" onclick="ans(7,'B')"><span class="lt">B)</span> Las plantas → Plantas con flores (angiospermas) → Rosal, Manzano</div>
+      <div class="opt" onclick="ans(7,'C')"><span class="lt">C)</span> Fotosíntesis → Las plantas → Rosal → Angiospermas</div>
+      <div class="opt" onclick="ans(7,'D')"><span class="lt">D)</span> Manzano → Girasol → Las plantas → Angiospermas</div>
+    </div>
+    <div class="fb" id="fb7"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6.1.4 -->
+  <div class="topic-label">
+    <span class="tag">6.1.4</span>
+    <div class="line"></div>
+    <span>Tipos de formas textuales de comunicación</span>
+  </div>
+
+  <div class="text-box">
+    <span class="lbl">Fragmento I</span>
+    <p><em>"El 14 de septiembre de 1847, las tropas estadounidenses entraron a la Ciudad de México tras la batalla de Chapultepec. Un grupo de cadetes del Heroico Colegio Militar se negó a retirarse y combatió hasta el final. Según la tradición, algunos prefirieron lanzarse al vacío envueltos en la bandera mexicana antes de rendirse."</em></p>
+  </div>
+  <div class="text-box">
+    <span class="lbl">Fragmento II</span>
+    <p><em>"El libro 'Aura', de Carlos Fuentes, es una novela breve pero de gran impacto. La historia, narrada en segunda persona, crea una atmósfera inquietante que atrapa al lector desde la primera página. Fuentes logra mezclar lo fantástico con lo cotidiano de manera magistral. Recomiendo esta obra a cualquier persona que disfrute de la literatura mexicana."</em></p>
+  </div>
+  <div class="text-box">
+    <span class="lbl">Fragmento III</span>
+    <p><em>"El texto analiza los efectos del consumo excesivo de azúcar en el organismo. El autor argumenta que el azúcar procesada genera adicción similar a las drogas y presenta estudios científicos que respaldan esta afirmación. Sin embargo, algunos datos citados corresponden a investigaciones de hace más de diez años, lo que debilita en parte la vigencia del argumento central."</em></p>
+  </div>
+
+  <div class="concept">
+    <span class="ct">💡 Recuerda</span>
+    • <strong>Resumen:</strong> versión reducida y objetiva de un texto.<br>
+    • <strong>Relato simple:</strong> narración de hechos reales o ficticios en orden cronológico.<br>
+    • <strong>Reseña:</strong> descripción de una obra + valoración o recomendación.<br>
+    • <strong>Comentario crítico:</strong> análisis profundo con juicio argumentado sobre el texto.
+  </div>
+
+  <div class="q-card" id="q8">
+    <span class="q-num">Reactivo 8 de 10</span>
+    <p class="q-text">¿A qué tipo de forma textual corresponde el <strong>Fragmento I</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(8,'A')"><span class="lt">A)</span> Reseña</div>
+      <div class="opt" onclick="ans(8,'B')"><span class="lt">B)</span> Resumen</div>
+      <div class="opt" onclick="ans(8,'C')"><span class="lt">C)</span> Relato simple</div>
+      <div class="opt" onclick="ans(8,'D')"><span class="lt">D)</span> Comentario crítico</div>
+    </div>
+    <div class="fb" id="fb8"></div>
+  </div>
+
+  <div class="q-card" id="q9">
+    <span class="q-num">Reactivo 9 de 10</span>
+    <p class="q-text">¿A qué tipo de forma textual corresponde el <strong>Fragmento II</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(9,'A')"><span class="lt">A)</span> Relato simple</div>
+      <div class="opt" onclick="ans(9,'B')"><span class="lt">B)</span> Comentario crítico</div>
+      <div class="opt" onclick="ans(9,'C')"><span class="lt">C)</span> Reseña</div>
+      <div class="opt" onclick="ans(9,'D')"><span class="lt">D)</span> Resumen</div>
+    </div>
+    <div class="fb" id="fb9"></div>
+  </div>
+
+  <div class="q-card" id="q10">
+    <span class="q-num">Reactivo 10 de 10</span>
+    <p class="q-text">El <strong>Fragmento III</strong> no solo describe el texto, sino que también señala una debilidad en los argumentos del autor. ¿Qué tipo de forma textual es?</p>
+    <div class="opts">
+      <div class="opt" onclick="ans(10,'A')"><span class="lt">A)</span> Resumen</div>
+      <div class="opt" onclick="ans(10,'B')"><span class="lt">B)</span> Reseña</div>
+      <div class="opt" onclick="ans(10,'C')"><span class="lt">C)</span> Relato simple</div>
+      <div class="opt" onclick="ans(10,'D')"><span class="lt">D)</span> Comentario crítico</div>
+    </div>
+    <div class="fb" id="fb10"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div id="submit-area">
+    <button class="btn-s" onclick="showScore()">Ver resultado final →</button>
+  </div>
+
+  <!-- SCORE -->
+  <div id="score-panel">
+    <h2>Resultado — Versión 2</h2>
+    <div class="big-num" id="bigNum">0/10</div>
+    <p id="pct"></p>
+    <div class="breakdown" id="breakdown"></div>
+    <p id="msg"></p>
+    <button class="btn-r" onclick="restart()">↺ Intentar de nuevo</button>
+  </div>
+
+</main>
+
+<script>
+const DATA = {
+  1:{ c:'B', ok:'El título debe capturar la idea central de TODO el texto: la importancia del sueño y las consecuencias de no dormir bien. Las otras opciones solo tocan un aspecto parcial del contenido.', fail:'Revisa el texto completo: habla del sueño como necesidad, sus funciones y las consecuencias de no dormir bien. El título debe cubrir toda esa idea, no solo una parte.' },
+  2:{ c:'B', ok:'"El medio ambiente" es un tema demasiado amplio. Un buen título expositivo debe ser específico: debe decirle al lector exactamente de qué trata el texto, en este caso de la contaminación del aire en ciudades.', fail:'El problema no es la tecnicidad ni las palabras usadas. Un título expositivo debe ser lo suficientemente específico para reflejar el tema concreto del texto.' },
+  3:{ c:'C', ok:'La palabra clave es "como resultado": los derrumbes son la consecuencia directa de las lluvias. Eso es una relación de causalidad: una idea explica por qué ocurrió la otra.', fail:'Fíjate en la expresión "como resultado". Esa frase indica que una cosa sucedió a causa de la otra, no que sea un ejemplo ni una descripción.' },
+  4:{ c:'B', ok:'La oración 4 pone un caso concreto (apagar luces, desconectar aparatos) para ilustrar lo que dijo la oración 3 (formas de ahorrar energía). La palabra clave es "por ejemplo".', fail:'Observa la expresión "por ejemplo": introduce un caso concreto que ilustra una idea más general. Eso es ejemplificación, no causalidad.' },
+  5:{ c:'C', ok:'Estudiar toda la semana es la CAUSA; obtener la calificación más alta es la CONSECUENCIA. La expresión "por esa razón" confirma esta relación. La causa siempre ocurre primero.', fail:'Recuerda: la causa ocurre primero y produce un resultado. ¿Qué ocurrió primero en el Par C? ¿Qué fue consecuencia de qué?' },
+  6:{ c:'C', ok:'"El rosal" es un ejemplo específico de angiosperma. En un mapa conceptual, los ejemplos concretos van en el nivel más bajo o más externo, que es el más específico.', fail:'Recuerda la jerarquía: concepto general → categorías → ejemplos específicos. ¿"El rosal" es un concepto general o un ejemplo concreto?' },
+  7:{ c:'B', ok:'La jerarquía correcta va de lo más general a lo más específico: Las plantas (concepto central) → Plantas con flores/angiospermas (categoría) → Rosal, Manzano (ejemplos concretos).', fail:'La dirección debe ser siempre: lo más amplio primero, los detalles después. Busca la opción que empiece con el concepto más general y termine con los ejemplos.' },
+  8:{ c:'C', ok:'El Fragmento I narra hechos históricos reales en orden cronológico (quiénes, cuándo, qué pasó). Eso es un relato simple: narración de hechos sin opinión ni análisis.', fail:'¿Hay opinión o análisis en el Fragmento I? No. Solo narra hechos en orden. Eso lo distingue de la reseña y el comentario crítico.' },
+  9:{ c:'C', ok:'El Fragmento II describe el contenido de la novela Y emite una valoración personal ("de gran impacto", "magistral") y una recomendación. Eso es una reseña.', fail:'Busca si hay una valoración u opinión personal del escritor. Frases como "de gran impacto" o "recomiendo" son señales claras de reseña.' },
+  10:{ c:'D', ok:'El Fragmento III analiza los argumentos del texto y señala una debilidad específica ("datos de hace más de diez años"). Eso es un comentario crítico: no solo describe, sino que evalúa con criterios.', fail:'Un resumen solo describe. Una reseña valora globalmente. El comentario crítico va más profundo: analiza la solidez de los argumentos y señala sus aciertos o fallas.' }
+};
+
+const TOPICS = {
+  '6.1.1': [1,2],
+  '6.1.2': [3,4,5],
+  '6.1.3': [6,7],
+  '6.1.4': [8,9,10]
+};
+
+let answered = {}, score = 0;
+
+function ans(n, sel) {
+  if (answered[n]) return;
+  answered[n] = sel;
+  const card = document.getElementById('q'+n);
+  const fb = document.getElementById('fb'+n);
+  const opts = card.querySelectorAll('.opt');
+  const letters = ['A','B','C','D'];
+  const correct = DATA[n].c;
+
+  opts.forEach((o,i) => {
+    o.classList.add('disabled');
+    if (letters[i] === correct) o.classList.add('correct');
+    if (letters[i] === sel && sel !== correct) o.classList.add('wrong');
+  });
+
+  if (sel === correct) {
+    score++;
+    fb.className = 'fb show ok';
+    fb.innerHTML = '<strong>✓ Correcto</strong>' + DATA[n].ok;
+  } else {
+    fb.className = 'fb show fail';
+    fb.innerHTML = '<strong>✗ No es correcto</strong>' + DATA[n].fail;
+  }
+
+  card.classList.add('answered');
+  updateProg();
+
+  if (Object.keys(answered).length === 10) {
+    document.getElementById('submit-area').style.display = 'block';
+    setTimeout(() => document.getElementById('submit-area').scrollIntoView({behavior:'smooth'}), 300);
+  }
+}
+
+function updateProg() {
+  const n = Object.keys(answered).length;
+  document.getElementById('pFill').style.width = (n*10)+'%';
+  document.getElementById('pCount').textContent = n+' / 10';
+}
+
+function showScore() {
+  document.getElementById('submit-area').style.display = 'none';
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  document.getElementById('bigNum').textContent = score+'/10';
+  document.getElementById('pct').textContent = (score*10)+'% de aciertos';
+
+  // Breakdown por tema
+  let bd = '';
+  for (const [topic, qs] of Object.entries(TOPICS)) {
+    const correct = qs.filter(q => answered[q] === DATA[q].c).length;
+    bd += `<div class="bd-item">
+      <div class="bd-topic">${topic}</div>
+      <div class="bd-score">${correct}/${qs.length}</div>
+      <div class="bd-label">reactivos correctos</div>
+    </div>`;
+  }
+  document.getElementById('breakdown').innerHTML = bd;
+
+  const msgs = [
+    [9, '¡Dominas el bloque 6.1! Estás muy bien preparado para el examen Acredita Bach.'],
+    [7, '¡Muy bien! Repasa los temas donde fallaste y estarás listo para presentar.'],
+    [5, 'Vas avanzando. Revisa las explicaciones de las respuestas incorrectas y practica de nuevo.'],
+    [0, 'No te rindas. Cada intento te acerca más al objetivo. Repasa los conceptos y vuelve a intentarlo.']
+  ];
+  document.getElementById('msg').textContent = msgs.find(([min]) => score >= min)[1];
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function restart() {
+  answered = {}; score = 0;
+  updateProg();
+  for (let i=1; i<=10; i++) {
+    const card = document.getElementById('q'+i);
+    const fb = document.getElementById('fb'+i);
+    card.classList.remove('answered');
+    fb.className='fb'; fb.innerHTML='';
+    card.querySelectorAll('.opt').forEach(o => o.classList.remove('correct','wrong','disabled'));
+  }
+  document.getElementById('score-panel').style.display='none';
+  document.getElementById('submit-area').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

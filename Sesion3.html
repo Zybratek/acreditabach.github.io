@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis Literario · Acuerdo 286 Acredita Bach</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+:root {
+  --cream: #F7F3EC;
+  --ink: #1A1510;
+  --ink-light: #4A3F32;
+  --ink-muted: #8A7B68;
+  --gold: #C9922A;
+  --gold-light: #F0D8A0;
+  --gold-pale: #FBF4E3;
+  --teal: #1B6B5A;
+  --teal-light: #D4EDE7;
+  --red: #9B3030;
+  --red-light: #F5E0E0;
+  --blue: #1D4F7C;
+  --blue-light: #DDE9F5;
+  --border: rgba(26,21,16,0.12);
+  --shadow: 0 2px 20px rgba(26,21,16,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 2.5rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -60px;
+  width: 260px; height: 260px;
+  border: 40px solid rgba(201,146,42,0.15);
+  border-radius: 50%;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: 40px;
+  width: 140px; height: 140px;
+  border: 24px solid rgba(201,146,42,0.08);
+  border-radius: 50%;
+}
+.header-inner { max-width: 800px; margin: 0 auto; position: relative; }
+.header-badge {
+  display: inline-block;
+  font-family: 'Source Serif 4', serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  border: 1px solid rgba(201,146,42,0.4);
+  padding: 3px 12px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+}
+.site-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.site-header h1 span { color: var(--gold-light); }
+.site-header p {
+  font-size: 15px;
+  color: rgba(247,243,236,0.65);
+  font-style: italic;
+}
+.progress-wrap { margin-top: 20px; }
+.progress-track {
+  background: rgba(255,255,255,0.1);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: var(--gold);
+  height: 4px;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+.progress-text {
+  font-size: 12px;
+  color: rgba(247,243,236,0.5);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* ── NAV ── */
+.nav-wrap {
+  background: var(--ink);
+  border-bottom: 1px solid rgba(201,146,42,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-btn {
+  background: none;
+  border: none;
+  color: rgba(247,243,236,0.45);
+  padding: 12px 16px;
+  font-family: 'Source Serif 4', serif;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.nav-btn:hover { color: var(--cream); }
+.nav-btn.active {
+  color: var(--gold-light);
+  border-bottom-color: var(--gold);
+}
+
+/* ── MAIN ── */
+.main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+/* ── SECTIONS ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── CONCEPT CARDS ── */
+.concept {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.concept::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+.concept.teal::before { background: var(--teal); }
+.concept.gold::before { background: var(--gold); }
+.concept.blue::before { background: var(--blue); }
+.concept.red::before { background: var(--red); }
+
+.concept-tag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+.teal .concept-tag { color: var(--teal); }
+.gold .concept-tag { color: var(--gold); }
+.blue .concept-tag { color: var(--blue); }
+.red .concept-tag { color: var(--red); }
+
+.concept h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.concept p {
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.7;
+}
+
+.example {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--teal-light);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.example.gold-bg { background: var(--gold-pale); }
+.example.blue-bg { background: var(--blue-light); }
+.example.red-bg { background: var(--red-light); }
+.ex-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 5px;
+  display: block;
+}
+.ex-label.gold { color: var(--gold); }
+.ex-label.blue { color: var(--blue); }
+
+.tip {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: var(--ink-light);
+  font-style: italic;
+}
+.tip strong { color: var(--gold); font-style: normal; }
+
+.types-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+@media (max-width: 500px) { .types-grid { grid-template-columns: 1fr; } }
+.type-item {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.type-item strong {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── EXERCISES ── */
+.exercises-header {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 2rem 0 1rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.exercise {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s;
+}
+.exercise:hover { box-shadow: var(--shadow); }
+
+.ex-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ex-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.ex-topic {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.topic-teal { background: var(--teal-light); color: var(--teal); }
+.topic-gold { background: var(--gold-pale); color: var(--gold); }
+.topic-blue { background: var(--blue-light); color: var(--blue); }
+.topic-red { background: var(--red-light); color: var(--red); }
+
+.ex-question {
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-weight: 600;
+}
+.ex-fragment {
+  background: var(--cream);
+  border-left: 3px solid var(--border);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-light);
+  border-radius: 0 4px 4px 0;
+  line-height: 1.6;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.opt-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--cream);
+  color: var(--ink-light);
+  font-family: 'Source Serif 4', serif;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  transition: all 0.18s;
+  width: 100%;
+}
+.opt-btn:hover { border-color: var(--gold); background: var(--gold-pale); color: var(--ink); }
+.opt-btn.correct {
+  background: var(--teal-light);
+  border-color: var(--teal);
+  color: var(--teal);
+  cursor: default;
+}
+.opt-btn.wrong {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red);
+  cursor: default;
+}
+.opt-btn.reveal-correct {
+  background: var(--teal-light);
+  border-color: var(--teal);
+  color: var(--teal);
+  cursor: default;
+}
+.opt-btn.disabled { cursor: default; pointer-events: none; }
+.opt-letter {
+  font-weight: 700;
+  font-size: 12px;
+  min-width: 18px;
+  padding-top: 1px;
+}
+
+.feedback {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1.6;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: var(--teal-light); color: var(--teal); border-left: 3px solid var(--teal); }
+.feedback.fail { background: var(--red-light); color: var(--red); border-left: 3px solid var(--red); }
+.fb-icon { font-weight: 700; margin-right: 5px; }
+
+/* ── SCORE SECTION ── */
+.score-panel {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.score-denom { font-size: 28px; color: rgba(247,243,236,0.4); }
+.score-label { font-size: 13px; color: rgba(247,243,236,0.5); margin-top: 6px; letter-spacing: 0.08em; }
+.score-msg { font-size: 16px; font-style: italic; color: var(--gold-light); margin-top: 10px; }
+
+.topic-score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 480px) { .topic-score-grid { grid-template-columns: 1fr; } }
+.topic-score-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ts-name { font-size: 13px; color: var(--ink); }
+.ts-val { font-size: 15px; font-weight: 700; }
+.ts-good { color: var(--teal); }
+.ts-mid { color: var(--gold); }
+.ts-low { color: var(--red); }
+
+.reset-btn {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 5px;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, transform 0.1s;
+}
+.reset-btn:hover { background: var(--ink); }
+.reset-btn:active { transform: scale(0.97); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
+
+/* ── PRINT ── */
+@media print {
+  .nav-wrap, .progress-wrap { display: none; }
+  .section { display: block !important; }
+  .opt-btn { border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <span class="header-badge">Acuerdo 286 · Acredita Bach · Bloque 6.2</span>
+    <h1>Recursos del<br><span>Análisis Literario</span></h1>
+    <p>Guía de estudio completa · Texto literario narrativo </p>
+    <p>Ing. Brian Stiff Chim Pech</p>
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+      <div class="progress-text" id="prog-text">0 de 25 ejercicios completados · 0 correctos</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showTab('teoria',this)">Teoría</button>
+    <button class="nav-btn" onclick="showTab('tema',this)">Tema central</button>
+    <button class="nav-btn" onclick="showTab('trama',this)">Trama</button>
+    <button class="nav-btn" onclick="showTab('personajes',this)">Personajes</button>
+    <button class="nav-btn" onclick="showTab('narrador',this)">Narrador</button>
+    <button class="nav-btn" onclick="showTab('ambito',this)">Ámbito y tiempo</button>
+    <button class="nav-btn" onclick="showTab('puntaje',this)">Mi puntaje</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ════════════ TEORÍA ════════════ -->
+<div class="section active" id="tab-teoria">
+
+  <div class="concept teal">
+    <span class="concept-tag">6.2.2 · Tema central</span>
+    <h3>Tema central del texto literario narrativo</h3>
+    <p>Es la <strong>idea principal o asunto fundamental</strong> que el autor desarrolla a lo largo de la obra. Es abstracto: no describe qué pasa, sino <em>de qué trata en el fondo</em> la historia. Se expresa en una o dos palabras clave (el amor, la traición, la soledad, la identidad…).</p>
+    <div class="example">
+      <span class="ex-label">Ejemplo</span>
+      En <em>Romeo y Julieta</em> el tema central es <strong>el amor imposible y el odio entre familias</strong>. En <em>El Quijote</em> es <strong>la ilusión frente a la realidad</strong>. En <em>El Principito</em> es <strong>la pureza de la infancia y los valores esenciales de la vida</strong>.
+    </div>
+    <div class="tip"><strong>Truco para el examen:</strong> Pregúntate "¿de qué trata esta historia en una sola frase abstracta?". La respuesta es el tema. No confundas tema con argumento (el argumento cuenta los eventos; el tema da la idea de fondo).</div>
+  </div>
+
+  <div class="concept gold">
+    <span class="concept-tag">6.2.3 · Trama y nudo</span>
+    <h3>Trama del texto literario narrativo</h3>
+    <p>La trama es la <strong>organización de los eventos y conflictos</strong> de la historia. El <strong>nudo</strong> es el conflicto principal que genera tensión y hace avanzar la narrativa. Sin conflicto no hay trama.</p>
+    <div class="example gold-bg">
+      <span class="ex-label gold">Estructura clásica de la trama</span>
+      <div class="types-grid">
+        <div class="type-item"><strong>1. Inicio</strong>Se presenta el mundo, los personajes y la situación inicial.</div>
+        <div class="type-item"><strong>2. Nudo</strong>Surge el conflicto o problema central que desequilibra la situación.</div>
+        <div class="type-item"><strong>3. Clímax</strong>Momento de máxima tensión o punto de no retorno.</div>
+        <div class="type-item"><strong>4. Desenlace</strong>Se resuelve (o no) el conflicto. La historia llega a su fin.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Truco:</strong> El nudo es el corazón de la trama. Si te preguntan "¿cuál es el nudo?", busca el problema o conflicto que pone en movimiento toda la historia.</div>
+  </div>
+
+  <div class="concept blue">
+    <span class="concept-tag">6.2.4 · Personajes</span>
+    <h3>Características y acciones de los personajes</h3>
+    <p>Los personajes se clasifican según su <strong>función</strong> (protagonista, antagonista, secundarios) y su <strong>profundidad</strong> (planos o redondos). Sus características pueden ser <strong>físicas</strong> (apariencia, edad) o <strong>psicológicas</strong> (emociones, valores, actitudes).</p>
+    <div class="example blue-bg">
+      <span class="ex-label blue">Clasificación esencial</span>
+      <div class="types-grid">
+        <div class="type-item"><strong>Protagonista</strong>El personaje principal que lleva la acción.</div>
+        <div class="type-item"><strong>Antagonista</strong>Se opone al protagonista; genera el conflicto.</div>
+        <div class="type-item"><strong>Redondo</strong>Complejo y profundo; cambia a lo largo de la historia.</div>
+        <div class="type-item"><strong>Plano</strong>Simple; tiene un solo rasgo dominante y no evoluciona.</div>
+        <div class="type-item"><strong>Rasgos físicos</strong>Describen el cuerpo, la apariencia y la edad.</div>
+        <div class="type-item"><strong>Rasgos psicológicos</strong>Describen emociones, pensamientos y personalidad.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Truco:</strong> Si un personaje cambia, aprende o evoluciona → es redondo. Si siempre es igual de principio a fin → es plano.</div>
+  </div>
+
+  <div class="concept teal">
+    <span class="concept-tag">6.2.5 · Narrador</span>
+    <h3>Características del narrador en el texto literario narrativo</h3>
+    <p>El narrador es la <strong>voz que cuenta la historia</strong>. ¡No es el autor! Se distingue por la persona gramatical que usa y por cuánto conoce de los personajes.</p>
+    <div class="example">
+      <span class="ex-label">Tipos de narrador</span>
+      <div class="types-grid">
+        <div class="type-item"><strong>1ª persona (yo)</strong>"Yo caminé hacia la puerta sin mirar atrás." Es personaje de la historia.</div>
+        <div class="type-item"><strong>3ª omnisciente</strong>"Ella temía que nadie la comprendiera." Sabe pensamientos y sentimientos de todos.</div>
+        <div class="type-item"><strong>3ª observador</strong>Solo describe lo externo. No accede a la mente de nadie.</div>
+        <div class="type-item"><strong>2ª persona (tú)</strong>"Tú abres la puerta y ves la oscuridad." Poco frecuente, muy inmersivo.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Clave del examen:</strong> Si el narrador revela los pensamientos o sentimientos de los personajes sin que ellos los digan en voz alta → es omnisciente. Si solo describe acciones externas → es observador.</div>
+  </div>
+
+  <div class="concept gold">
+    <span class="concept-tag">6.2.6 · Ámbito de la narración</span>
+    <h3>Ámbito de la narración en el texto literario narrativo</h3>
+    <p>El ámbito es el <strong>espacio, ambiente y contexto</strong> donde se desarrolla la historia. No es solo el lugar físico: incluye la época histórica, la atmósfera y el entorno social o cultural de los personajes.</p>
+    <div class="example gold-bg">
+      <span class="ex-label gold">Ejemplo</span>
+      En <em>Cien años de soledad</em> de García Márquez, el ámbito es Macondo: un pueblo imaginario en un entorno tropical, marcado por el calor, la magia y las costumbres de la Colombia rural del siglo XX. El ámbito crea la atmósfera que hace posible el realismo mágico.
+    </div>
+    <div class="tip"><strong>Recuerda:</strong> Cuando el examen pregunta por el "ámbito", quiere que identifiques el dónde + cuándo + ambiente + contexto social, no solo el nombre del lugar.</div>
+  </div>
+
+  <div class="concept blue">
+    <span class="concept-tag">6.2.7 · Tiempo narrativo</span>
+    <h3>Tipos de tiempo narrativo en el texto literario narrativo</h3>
+    <p>El tiempo narrativo es la forma en que el narrador <strong>ordena los eventos</strong> en la historia. Este orden no siempre coincide con el orden cronológico real en que ocurrieron los hechos.</p>
+    <div class="example blue-bg">
+      <span class="ex-label blue">Los tres tipos principales</span>
+      <div class="types-grid">
+        <div class="type-item"><strong>Lineal (cronológico)</strong>Los hechos se narran en el orden en que ocurrieron: del pasado al futuro sin interrupciones.</div>
+        <div class="type-item"><strong>Retrospectivo (flashback / analepsis)</strong>El narrador interrumpe el presente para contar algo del pasado. "Recordó que…"</div>
+        <div class="type-item"><strong>Prospectivo (flashforward / prolepsis)</strong>Se anticipa algo que ocurrirá en el futuro. "Años después descubriría que…"</div>
+        <div class="type-item"><strong>Circular</strong>La historia termina en el mismo punto donde comenzó.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Mnemotecnia:</strong> <em>Retro</em> = hacia atrás = pasado (flashback). <em>Prospectivo</em> = hacia adelante = futuro (flashforward). <em>Lineal</em> = en orden, como el tiempo real.</div>
+  </div>
+
+</div><!-- /teoría -->
+
+<!-- ════════════ TEMA CENTRAL ════════════ -->
+<div class="section" id="tab-tema">
+  <div class="exercises-header">Ejercicios — Tema Central (6.2.2)</div>
+
+  <div class="exercise" id="ex1">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 1 / 25</span>
+      <span class="ex-topic topic-teal">Tema central</span>
+    </div>
+    <div class="ex-question">¿Cuál es la definición correcta de "tema central" en un texto literario narrativo?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex1',false)"><span class="opt-letter">A</span>La descripción de los personajes principales de la historia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex1',false)"><span class="opt-letter">B</span>La secuencia ordenada de eventos que ocurren en la narración.</button>
+      <button class="opt-btn" onclick="ans(this,'ex1',true)"><span class="opt-letter">C</span>La idea principal o asunto abstracto que el autor desarrolla a lo largo de la obra.</button>
+      <button class="opt-btn" onclick="ans(this,'ex1',false)"><span class="opt-letter">D</span>El lugar y la época en que se desarrolla la historia.</button>
+    </div>
+    <div class="feedback" id="fb-ex1"></div>
+  </div>
+
+  <div class="exercise" id="ex2">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 2 / 25</span>
+      <span class="ex-topic topic-teal">Tema central</span>
+    </div>
+    <div class="ex-question">Lee el fragmento e identifica su tema central:</div>
+    <div class="ex-fragment">"Durante años, Marta cuidó a su madre enferma, postergando sus sueños. Cuando la madre falleció, Marta se dio cuenta de que ya no sabía quién era ni qué quería de la vida."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex2',false)"><span class="opt-letter">A</span>Una mujer que cuida a su madre enferma durante muchos años.</button>
+      <button class="opt-btn" onclick="ans(this,'ex2',true)"><span class="opt-letter">B</span>La pérdida de identidad y el sacrificio personal.</button>
+      <button class="opt-btn" onclick="ans(this,'ex2',false)"><span class="opt-letter">C</span>La muerte y los problemas de salud en la vejez.</button>
+      <button class="opt-btn" onclick="ans(this,'ex2',false)"><span class="opt-letter">D</span>La soledad que experimenta una mujer al enviudar.</button>
+    </div>
+    <div class="feedback" id="fb-ex2"></div>
+  </div>
+
+  <div class="exercise" id="ex3">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 3 / 25</span>
+      <span class="ex-topic topic-teal">Tema central</span>
+    </div>
+    <div class="ex-question">¿Cuál de los siguientes es un TEMA CENTRAL y no un argumento?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex3',false)"><span class="opt-letter">A</span>Un joven huérfano hereda una fortuna de un benefactor desconocido.</button>
+      <button class="opt-btn" onclick="ans(this,'ex3',false)"><span class="opt-letter">B</span>Dos hermanos se pelean por la herencia de su padre fallecido.</button>
+      <button class="opt-btn" onclick="ans(this,'ex3',true)"><span class="opt-letter">C</span>La búsqueda de la justicia en una sociedad corrupta.</button>
+      <button class="opt-btn" onclick="ans(this,'ex3',false)"><span class="opt-letter">D</span>Una mujer abandona su pueblo para estudiar en la ciudad.</button>
+    </div>
+    <div class="feedback" id="fb-ex3"></div>
+  </div>
+
+  <div class="exercise" id="ex4">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 4 / 25</span>
+      <span class="ex-topic topic-teal">Tema central</span>
+    </div>
+    <div class="ex-question">En la novela <em>Frankenstein</em> de Mary Shelley, el científico crea un ser vivo y luego lo abandona; el monstruo, rechazado por todos, desencadena una tragedia. ¿Cuál es el tema central?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex4',false)"><span class="opt-letter">A</span>Un científico que realiza experimentos peligrosos en su laboratorio.</button>
+      <button class="opt-btn" onclick="ans(this,'ex4',false)"><span class="opt-letter">B</span>Un monstruo que mata personas en un pueblo europeo.</button>
+      <button class="opt-btn" onclick="ans(this,'ex4',true)"><span class="opt-letter">C</span>Los peligros de jugar a ser Dios y la responsabilidad del creador sobre su creación.</button>
+      <button class="opt-btn" onclick="ans(this,'ex4',false)"><span class="opt-letter">D</span>La amistad entre un científico y su asistente.</button>
+    </div>
+    <div class="feedback" id="fb-ex4"></div>
+  </div>
+
+  <div class="exercise" id="ex5">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 5 / 25</span>
+      <span class="ex-topic topic-teal">Tema central</span>
+    </div>
+    <div class="ex-question">¿Qué diferencia al TEMA del ARGUMENTO de una obra?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex5',true)"><span class="opt-letter">A</span>El tema es la idea abstracta y universal; el argumento es la historia concreta que sucede.</button>
+      <button class="opt-btn" onclick="ans(this,'ex5',false)"><span class="opt-letter">B</span>El tema incluye todos los personajes; el argumento solo al protagonista.</button>
+      <button class="opt-btn" onclick="ans(this,'ex5',false)"><span class="opt-letter">C</span>El tema describe el lugar; el argumento describe el tiempo de la historia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex5',false)"><span class="opt-letter">D</span>No hay diferencia: tema y argumento son sinónimos en literatura.</button>
+    </div>
+    <div class="feedback" id="fb-ex5"></div>
+  </div>
+
+</div><!-- /tema -->
+
+<!-- ════════════ TRAMA ════════════ -->
+<div class="section" id="tab-trama">
+  <div class="exercises-header">Ejercicios — Trama y Nudo (6.2.3)</div>
+
+  <div class="exercise" id="ex6">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 6 / 25</span>
+      <span class="ex-topic topic-gold">Trama</span>
+    </div>
+    <div class="ex-question">¿Cuál es el orden correcto de los elementos de la estructura clásica de la trama?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex6',false)"><span class="opt-letter">A</span>Clímax → Nudo → Inicio → Desenlace</button>
+      <button class="opt-btn" onclick="ans(this,'ex6',true)"><span class="opt-letter">B</span>Inicio → Nudo → Clímax → Desenlace</button>
+      <button class="opt-btn" onclick="ans(this,'ex6',false)"><span class="opt-letter">C</span>Nudo → Inicio → Clímax → Desenlace</button>
+      <button class="opt-btn" onclick="ans(this,'ex6',false)"><span class="opt-letter">D</span>Inicio → Clímax → Nudo → Desenlace</button>
+    </div>
+    <div class="feedback" id="fb-ex6"></div>
+  </div>
+
+  <div class="exercise" id="ex7">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 7 / 25</span>
+      <span class="ex-topic topic-gold">Trama</span>
+    </div>
+    <div class="ex-question">Lee el resumen e identifica cuál es el NUDO de la trama:</div>
+    <div class="ex-fragment">"Sofía vive tranquila en su pueblo con su familia. Un día descubre que es adoptada y que su madre biológica la busca desde hace años. Sofía emprende un viaje para encontrarla y reconstruir su historia. Finalmente ambas se reencuentran y logran sanar viejas heridas."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex7',false)"><span class="opt-letter">A</span>Sofía vive tranquila en su pueblo con su familia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex7',true)"><span class="opt-letter">B</span>Sofía descubre que es adoptada y emprende la búsqueda de su madre biológica.</button>
+      <button class="opt-btn" onclick="ans(this,'ex7',false)"><span class="opt-letter">C</span>Sofía y su madre biológica se reencuentran al final.</button>
+      <button class="opt-btn" onclick="ans(this,'ex7',false)"><span class="opt-letter">D</span>La madre biológica viaja al pueblo de Sofía.</button>
+    </div>
+    <div class="feedback" id="fb-ex7"></div>
+  </div>
+
+  <div class="exercise" id="ex8">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 8 / 25</span>
+      <span class="ex-topic topic-gold">Trama</span>
+    </div>
+    <div class="ex-question">El CLÍMAX de una narración corresponde a:</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex8',false)"><span class="opt-letter">A</span>La parte donde se presentan los personajes y el escenario inicial.</button>
+      <button class="opt-btn" onclick="ans(this,'ex8',false)"><span class="opt-letter">B</span>El inicio del conflicto que desencadena la historia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex8',true)"><span class="opt-letter">C</span>El momento de mayor tensión o punto de no retorno antes del desenlace.</button>
+      <button class="opt-btn" onclick="ans(this,'ex8',false)"><span class="opt-letter">D</span>La resolución final del conflicto principal.</button>
+    </div>
+    <div class="feedback" id="fb-ex8"></div>
+  </div>
+
+  <div class="exercise" id="ex9">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 9 / 25</span>
+      <span class="ex-topic topic-gold">Trama</span>
+    </div>
+    <div class="ex-question">¿Qué elemento de la trama representa la situación estable con la que comienza la historia, antes de que aparezca el conflicto?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex9',false)"><span class="opt-letter">A</span>El nudo</button>
+      <button class="opt-btn" onclick="ans(this,'ex9',false)"><span class="opt-letter">B</span>El clímax</button>
+      <button class="opt-btn" onclick="ans(this,'ex9',true)"><span class="opt-letter">C</span>El inicio o situación inicial</button>
+      <button class="opt-btn" onclick="ans(this,'ex9',false)"><span class="opt-letter">D</span>El desenlace</button>
+    </div>
+    <div class="feedback" id="fb-ex9"></div>
+  </div>
+
+  <div class="exercise" id="ex10">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 10 / 25</span>
+      <span class="ex-topic topic-gold">Trama</span>
+    </div>
+    <div class="ex-question">En la película <em>El Rey León</em>, Simba es el heredero del trono; su tío Scar lo mata a su padre y lo culpa a él. Simba huye y regresa años después para reclamar su lugar. ¿Cuál es el NUDO?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex10',false)"><span class="opt-letter">A</span>Simba es el heredero del trono y vive feliz con su familia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex10',false)"><span class="opt-letter">B</span>Simba regresa y recupera el trono al final.</button>
+      <button class="opt-btn" onclick="ans(this,'ex10',true)"><span class="opt-letter">C</span>Scar mata al padre de Simba, lo culpa a él, y Simba huye creyéndose responsable.</button>
+      <button class="opt-btn" onclick="ans(this,'ex10',false)"><span class="opt-letter">D</span>Simba conoce a Timón y Pumba en la jungla.</button>
+    </div>
+    <div class="feedback" id="fb-ex10"></div>
+  </div>
+
+</div><!-- /trama -->
+
+<!-- ════════════ PERSONAJES ════════════ -->
+<div class="section" id="tab-personajes">
+  <div class="exercises-header">Ejercicios — Personajes (6.2.4)</div>
+
+  <div class="exercise" id="ex11">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 11 / 25</span>
+      <span class="ex-topic topic-blue">Personajes</span>
+    </div>
+    <div class="ex-question">¿Cuál es la diferencia entre un personaje PLANO y uno REDONDO?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex11',false)"><span class="opt-letter">A</span>El personaje plano es el protagonista; el redondo es el antagonista.</button>
+      <button class="opt-btn" onclick="ans(this,'ex11',true)"><span class="opt-letter">B</span>El personaje plano no cambia y tiene un solo rasgo dominante; el redondo es complejo y puede evolucionar.</button>
+      <button class="opt-btn" onclick="ans(this,'ex11',false)"><span class="opt-letter">C</span>El personaje plano es el más importante; el redondo aparece poco en la historia.</button>
+      <button class="opt-btn" onclick="ans(this,'ex11',false)"><span class="opt-letter">D</span>El personaje plano solo tiene características físicas; el redondo solo tiene características psicológicas.</button>
+    </div>
+    <div class="feedback" id="fb-ex11"></div>
+  </div>
+
+  <div class="exercise" id="ex12">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 12 / 25</span>
+      <span class="ex-topic topic-blue">Personajes</span>
+    </div>
+    <div class="ex-question">Lee la descripción e identifica el tipo de personaje:</div>
+    <div class="ex-fragment">"Don Rodrigo siempre fue ambicioso y cruel. Desde el primer capítulo hasta el último, manipuló a todos a su alrededor para obtener poder. Nunca mostró duda, remordimiento ni cambio alguno."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex12',false)"><span class="opt-letter">A</span>Protagonista redondo</button>
+      <button class="opt-btn" onclick="ans(this,'ex12',false)"><span class="opt-letter">B</span>Personaje secundario redondo</button>
+      <button class="opt-btn" onclick="ans(this,'ex12',true)"><span class="opt-letter">C</span>Antagonista plano</button>
+      <button class="opt-btn" onclick="ans(this,'ex12',false)"><span class="opt-letter">D</span>Protagonista plano</button>
+    </div>
+    <div class="feedback" id="fb-ex12"></div>
+  </div>
+
+  <div class="exercise" id="ex13">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 13 / 25</span>
+      <span class="ex-topic topic-blue">Personajes</span>
+    </div>
+    <div class="ex-question">¿Cuál de los siguientes ejemplos describe una característica PSICOLÓGICA de un personaje?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex13',false)"><span class="opt-letter">A</span>"Tenía los ojos verdes y el cabello corto y negro."</button>
+      <button class="opt-btn" onclick="ans(this,'ex13',false)"><span class="opt-letter">B</span>"Era una mujer alta, de complexión delgada y piel morena."</button>
+      <button class="opt-btn" onclick="ans(this,'ex13',true)"><span class="opt-letter">C</span>"Una profunda desconfianza hacia los demás lo hacía rechazar cualquier muestra de afecto."</button>
+      <button class="opt-btn" onclick="ans(this,'ex13',false)"><span class="opt-letter">D</span>"Caminaba siempre encorvado y vestía ropa oscura."</button>
+    </div>
+    <div class="feedback" id="fb-ex13"></div>
+  </div>
+
+  <div class="exercise" id="ex14">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 14 / 25</span>
+      <span class="ex-topic topic-blue">Personajes</span>
+    </div>
+    <div class="ex-question">El personaje que se OPONE al protagonista y genera el conflicto principal recibe el nombre de:</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex14',false)"><span class="opt-letter">A</span>Personaje redondo</button>
+      <button class="opt-btn" onclick="ans(this,'ex14',false)"><span class="opt-letter">B</span>Narrador</button>
+      <button class="opt-btn" onclick="ans(this,'ex14',true)"><span class="opt-letter">C</span>Antagonista</button>
+      <button class="opt-btn" onclick="ans(this,'ex14',false)"><span class="opt-letter">D</span>Personaje secundario</button>
+    </div>
+    <div class="feedback" id="fb-ex14"></div>
+  </div>
+
+  <div class="exercise" id="ex15">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 15 / 25</span>
+      <span class="ex-topic topic-blue">Personajes</span>
+    </div>
+    <div class="ex-question">En <em>Harry Potter</em>, Harry es un joven que pasa de ser un niño ignorante de su poder a convertirse en el mago que derrota al mal, superando miedos y perdiendo seres queridos. ¿Qué tipo de personaje es Harry?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex15',false)"><span class="opt-letter">A</span>Personaje plano, porque siempre es el héroe.</button>
+      <button class="opt-btn" onclick="ans(this,'ex15',false)"><span class="opt-letter">B</span>Personaje secundario y plano.</button>
+      <button class="opt-btn" onclick="ans(this,'ex15',true)"><span class="opt-letter">C</span>Personaje redondo y protagonista, porque evoluciona y tiene gran profundidad psicológica.</button>
+      <button class="opt-btn" onclick="ans(this,'ex15',false)"><span class="opt-letter">D</span>Antagonista redondo, porque enfrenta muchos obstáculos.</button>
+    </div>
+    <div class="feedback" id="fb-ex15"></div>
+  </div>
+
+</div><!-- /personajes -->
+
+<!-- ════════════ NARRADOR ════════════ -->
+<div class="section" id="tab-narrador">
+  <div class="exercises-header">Ejercicios — Narrador (6.2.5)</div>
+
+  <div class="exercise" id="ex16">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 16 / 25</span>
+      <span class="ex-topic topic-teal">Narrador</span>
+    </div>
+    <div class="ex-question">Identifica el tipo de narrador en el siguiente fragmento:</div>
+    <div class="ex-fragment">"Nunca olvidaré aquella mañana. Mis manos temblaban mientras abría el sobre y leía las primeras palabras. Supe entonces que mi vida cambiaría para siempre."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex16',true)"><span class="opt-letter">A</span>Narrador en primera persona (personaje de la historia)</button>
+      <button class="opt-btn" onclick="ans(this,'ex16',false)"><span class="opt-letter">B</span>Narrador omnisciente en tercera persona</button>
+      <button class="opt-btn" onclick="ans(this,'ex16',false)"><span class="opt-letter">C</span>Narrador observador en tercera persona</button>
+      <button class="opt-btn" onclick="ans(this,'ex16',false)"><span class="opt-letter">D</span>Narrador en segunda persona</button>
+    </div>
+    <div class="feedback" id="fb-ex16"></div>
+  </div>
+
+  <div class="exercise" id="ex17">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 17 / 25</span>
+      <span class="ex-topic topic-teal">Narrador</span>
+    </div>
+    <div class="ex-question">¿Qué característica define al narrador OMNISCIENTE?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex17',false)"><span class="opt-letter">A</span>Participa directamente en la historia y solo conoce sus propios pensamientos.</button>
+      <button class="opt-btn" onclick="ans(this,'ex17',true)"><span class="opt-letter">B</span>Conoce los pensamientos, sentimientos e intenciones de todos los personajes, incluso lo que ellos no dicen en voz alta.</button>
+      <button class="opt-btn" onclick="ans(this,'ex17',false)"><span class="opt-letter">C</span>Solo describe lo que es visible externamente, sin acceder a la mente de nadie.</button>
+      <button class="opt-btn" onclick="ans(this,'ex17',false)"><span class="opt-letter">D</span>Se dirige directamente al lector usando la segunda persona (tú).</button>
+    </div>
+    <div class="feedback" id="fb-ex17"></div>
+  </div>
+
+  <div class="exercise" id="ex18">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 18 / 25</span>
+      <span class="ex-topic topic-teal">Narrador</span>
+    </div>
+    <div class="ex-question">Identifica el tipo de narrador:</div>
+    <div class="ex-fragment">"El hombre cruzó la calle sin mirar. Llevaba una maleta café y caminaba deprisa. Entró al edificio gris de la esquina y la puerta se cerró tras él."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex18',false)"><span class="opt-letter">A</span>Narrador omnisciente: sabe todo sobre el personaje.</button>
+      <button class="opt-btn" onclick="ans(this,'ex18',true)"><span class="opt-letter">B</span>Narrador observador: solo describe acciones externas, sin entrar en la mente del personaje.</button>
+      <button class="opt-btn" onclick="ans(this,'ex18',false)"><span class="opt-letter">C</span>Narrador en primera persona: es el protagonista.</button>
+      <button class="opt-btn" onclick="ans(this,'ex18',false)"><span class="opt-letter">D</span>Narrador en segunda persona: se dirige al lector.</button>
+    </div>
+    <div class="feedback" id="fb-ex18"></div>
+  </div>
+
+  <div class="exercise" id="ex19">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 19 / 25</span>
+      <span class="ex-topic topic-teal">Narrador</span>
+    </div>
+    <div class="ex-question">¿Cuál de estos fragmentos corresponde a un narrador OMNISCIENTE?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex19',false)"><span class="opt-letter">A</span>"Yo vi cómo Luis salió corriendo y pensé que algo malo había pasado."</button>
+      <button class="opt-btn" onclick="ans(this,'ex19',false)"><span class="opt-letter">B</span>"Luis salió corriendo. Afuera llovía intensamente."</button>
+      <button class="opt-btn" onclick="ans(this,'ex19',true)"><span class="opt-letter">C</span>"Luis salió corriendo, aunque en el fondo sabía que escapar no resolvería nada; el miedo que cargaba era suyo y no dejaría de perseguirlo."</button>
+      <button class="opt-btn" onclick="ans(this,'ex19',false)"><span class="opt-letter">D</span>"Tú sales corriendo y el frío de la noche te golpea en el rostro."</button>
+    </div>
+    <div class="feedback" id="fb-ex19"></div>
+  </div>
+
+  <div class="exercise" id="ex20">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 20 / 25</span>
+      <span class="ex-topic topic-teal">Narrador</span>
+    </div>
+    <div class="ex-question">¿Por qué es importante distinguir al NARRADOR del AUTOR en una obra literaria?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex20',false)"><span class="opt-letter">A</span>No es importante: narrador y autor siempre son la misma persona.</button>
+      <button class="opt-btn" onclick="ans(this,'ex20',true)"><span class="opt-letter">B</span>Porque el narrador es una voz ficticia creada por el autor; sus opiniones no representan necesariamente las del autor real.</button>
+      <button class="opt-btn" onclick="ans(this,'ex20',false)"><span class="opt-letter">C</span>Porque el autor siempre escribe en primera persona y el narrador en tercera.</button>
+      <button class="opt-btn" onclick="ans(this,'ex20',false)"><span class="opt-letter">D</span>Porque el narrador es siempre el protagonista de la historia.</button>
+    </div>
+    <div class="feedback" id="fb-ex20"></div>
+  </div>
+
+</div><!-- /narrador -->
+
+<!-- ════════════ ÁMBITO Y TIEMPO ════════════ -->
+<div class="section" id="tab-ambito">
+  <div class="exercises-header">Ejercicios — Ámbito y Tiempo Narrativo (6.2.6 y 6.2.7)</div>
+
+  <div class="exercise" id="ex21">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 21 / 25</span>
+      <span class="ex-topic topic-gold">Ámbito</span>
+    </div>
+    <div class="ex-question">¿Qué elementos forman el ÁMBITO de la narración?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex21',false)"><span class="opt-letter">A</span>Los nombres de los personajes y sus edades.</button>
+      <button class="opt-btn" onclick="ans(this,'ex21',false)"><span class="opt-letter">B</span>El tipo de narrador y la estructura de la trama.</button>
+      <button class="opt-btn" onclick="ans(this,'ex21',true)"><span class="opt-letter">C</span>El espacio físico, la época histórica, la atmósfera y el contexto social o cultural.</button>
+      <button class="opt-btn" onclick="ans(this,'ex21',false)"><span class="opt-letter">D</span>Solo el nombre del país o ciudad donde ocurren los hechos.</button>
+    </div>
+    <div class="feedback" id="fb-ex21"></div>
+  </div>
+
+  <div class="exercise" id="ex22">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 22 / 25</span>
+      <span class="ex-topic topic-gold">Ámbito</span>
+    </div>
+    <div class="ex-question">Lee el fragmento e identifica qué elemento del ámbito se describe principalmente:</div>
+    <div class="ex-fragment">"Las calles empedradas y los caballos que pasaban entre las casas de adobe recordaban tiempos coloniales. El olor a copal y el sonido de las campanas de la iglesia marcaban el ritmo de cada día en aquel pueblo del siglo XVII."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex22',false)"><span class="opt-letter">A</span>Los rasgos psicológicos de los personajes.</button>
+      <button class="opt-btn" onclick="ans(this,'ex22',true)"><span class="opt-letter">B</span>La época histórica y el espacio físico que conforman el ámbito.</button>
+      <button class="opt-btn" onclick="ans(this,'ex22',false)"><span class="opt-letter">C</span>El tipo de tiempo narrativo utilizado.</button>
+      <button class="opt-btn" onclick="ans(this,'ex22',false)"><span class="opt-letter">D</span>El nudo de la trama.</button>
+    </div>
+    <div class="feedback" id="fb-ex22"></div>
+  </div>
+
+  <div class="exercise" id="ex23">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 23 / 25</span>
+      <span class="ex-topic topic-blue">Tiempo narrativo</span>
+    </div>
+    <div class="ex-question">Identifica el tipo de tiempo narrativo en el siguiente fragmento:</div>
+    <div class="ex-fragment">"Elena revisaba sus viejas fotografías cuando, de repente, recordó aquella tarde lluviosa de hace quince años en que conoció a su mejor amiga en el kiosco de la plaza."</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex23',false)"><span class="opt-letter">A</span>Tiempo lineal o cronológico</button>
+      <button class="opt-btn" onclick="ans(this,'ex23',true)"><span class="opt-letter">B</span>Tiempo retrospectivo (flashback o analepsis)</button>
+      <button class="opt-btn" onclick="ans(this,'ex23',false)"><span class="opt-letter">C</span>Tiempo prospectivo (flashforward o prolepsis)</button>
+      <button class="opt-btn" onclick="ans(this,'ex23',false)"><span class="opt-letter">D</span>Tiempo circular</button>
+    </div>
+    <div class="feedback" id="fb-ex23"></div>
+  </div>
+
+  <div class="exercise" id="ex24">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 24 / 25</span>
+      <span class="ex-topic topic-blue">Tiempo narrativo</span>
+    </div>
+    <div class="ex-question">Una biografía que narra la vida de una persona desde su nacimiento hasta su muerte, contando los eventos en el orden en que ocurrieron, usa:</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex24',false)"><span class="opt-letter">A</span>Tiempo retrospectivo</button>
+      <button class="opt-btn" onclick="ans(this,'ex24',false)"><span class="opt-letter">B</span>Tiempo prospectivo</button>
+      <button class="opt-btn" onclick="ans(this,'ex24',true)"><span class="opt-letter">C</span>Tiempo lineal o cronológico</button>
+      <button class="opt-btn" onclick="ans(this,'ex24',false)"><span class="opt-letter">D</span>Tiempo circular</button>
+    </div>
+    <div class="feedback" id="fb-ex24"></div>
+  </div>
+
+  <div class="exercise" id="ex25">
+    <div class="ex-meta">
+      <span class="ex-num">Ejercicio 25 / 25</span>
+      <span class="ex-topic topic-blue">Tiempo narrativo</span>
+    </div>
+    <div class="ex-question">¿Cuál de los siguientes fragmentos muestra un tiempo PROSPECTIVO (flashforward)?</div>
+    <div class="options-list">
+      <button class="opt-btn" onclick="ans(this,'ex25',false)"><span class="opt-letter">A</span>"Recordó que de niño su abuelo le enseñó a pescar en aquel río."</button>
+      <button class="opt-btn" onclick="ans(this,'ex25',false)"><span class="opt-letter">B</span>"Luis nació, creció, estudió y envejeció en el mismo pueblo."</button>
+      <button class="opt-btn" onclick="ans(this,'ex25',true)"><span class="opt-letter">C</span>"Lo que ella aún no sabía era que, diez años después, ese encuentro cambiaría el rumbo de toda su vida."</button>
+      <button class="opt-btn" onclick="ans(this,'ex25',false)"><span class="opt-letter">D</span>"La historia de Ana termina como comenzó: sola, frente al mar."</button>
+    </div>
+    <div class="feedback" id="fb-ex25"></div>
+  </div>
+
+</div><!-- /ambito -->
+
+<!-- ════════════ PUNTAJE ════════════ -->
+<div class="section" id="tab-puntaje">
+
+  <div class="score-panel">
+    <div class="score-big" id="score-num">0<span class="score-denom">/25</span></div>
+    <div class="score-label">EJERCICIOS CORRECTOS</div>
+    <div class="score-msg" id="score-msg">Completa los ejercicios para ver tu resultado</div>
+  </div>
+
+  <div class="topic-score-grid" id="topic-grid"></div>
+
+  <div style="text-align:center;margin-top:1rem">
+    <button class="reset-btn" onclick="resetAll()">Reiniciar todos los ejercicios ↺</button>
+  </div>
+
+</div><!-- /puntaje -->
+
+</main>
+
+<script>
+const state = {};
+const total = 25;
+
+const fbTexts = {
+  ex1: {
+    ok: "¡Correcto! El tema es una idea abstracta y universal, no la descripción de eventos ni personajes.",
+    fail: "Incorrecto. El tema central es la idea abstracta que el autor explora, no los eventos ni los personajes concretos de la historia."
+  },
+  ex2: {
+    ok: "¡Exacto! El tema es la idea de fondo: la pérdida de identidad y el sacrificio, no el evento concreto de cuidar a alguien.",
+    fail: "Incorrecto. No confundas tema con argumento. El tema es la idea abstracta: en este caso, la identidad perdida y el sacrificio personal."
+  },
+  ex3: {
+    ok: "¡Bien! 'La búsqueda de la justicia en una sociedad corrupta' es una idea abstracta y universal: eso es un tema. Las otras opciones describen eventos concretos (argumento).",
+    fail: "Incorrecto. Las otras opciones describen argumentos (eventos que ocurren). Solo la opción C expresa una idea abstracta y universal: eso es el tema."
+  },
+  ex4: {
+    ok: "¡Correcto! El tema de Frankenstein es la responsabilidad ética de quien crea vida y las consecuencias de la soberbia científica.",
+    fail: "Incorrecto. El tema no es lo que literalmente pasa, sino la idea de fondo: los peligros de jugar a ser Dios y el abandono de la responsabilidad creadora."
+  },
+  ex5: {
+    ok: "¡Perfecto! El tema es abstracto ('el amor', 'la traición'); el argumento es la historia concreta de los eventos.",
+    fail: "Incorrecto. El tema es la idea universal y abstracta (lo que se explora). El argumento son los eventos concretos que suceden. Son conceptos distintos."
+  },
+  ex6: {
+    ok: "¡Correcto! La estructura clásica de la trama es: Inicio → Nudo → Clímax → Desenlace.",
+    fail: "Incorrecto. El orden correcto es: Inicio (presentación) → Nudo (conflicto) → Clímax (mayor tensión) → Desenlace (resolución)."
+  },
+  ex7: {
+    ok: "¡Bien! El nudo es el conflicto que desequilibra la historia: el descubrimiento de la adopción y la búsqueda que genera.",
+    fail: "Incorrecto. El nudo es el conflicto principal que pone en movimiento la historia. En este caso, es el descubrimiento de la adopción y la búsqueda que desencadena."
+  },
+  ex8: {
+    ok: "¡Exacto! El clímax es el punto de máxima tensión, el momento crucial antes de que el conflicto empiece a resolverse.",
+    fail: "Incorrecto. El clímax no es el inicio ni el nudo. Es el punto de mayor tensión o punto de no retorno, justo antes del desenlace."
+  },
+  ex9: {
+    ok: "¡Correcto! El inicio o situación inicial presenta el mundo estable y los personajes antes de que aparezca el conflicto.",
+    fail: "Incorrecto. El inicio es la situación estable previa al conflicto. El nudo es el conflicto; el clímax, la tensión máxima; el desenlace, la resolución."
+  },
+  ex10: {
+    ok: "¡Perfecto! El nudo es el conflicto central: la muerte del padre, la falsa culpa sobre Simba y su huida. Todo lo demás gira alrededor de esto.",
+    fail: "Incorrecto. El nudo es el problema central que desequilibra la historia. Aquí es el engaño de Scar y la huida de Simba, no la situación inicial ni el final."
+  },
+  ex11: {
+    ok: "¡Correcto! El personaje plano tiene un solo rasgo y no cambia; el redondo es complejo y puede evolucionar a lo largo de la historia.",
+    fail: "Incorrecto. Plano y redondo describen la profundidad y evolución del personaje, no si es protagonista o antagonista."
+  },
+  ex12: {
+    ok: "¡Bien! Al no cambiar jamás y tener un solo rasgo (la maldad), Don Rodrigo es plano. Al oponerse al protagonista, es antagonista.",
+    fail: "Incorrecto. Un personaje que no cambia de principio a fin y tiene un solo rasgo dominante es plano. Al ser el villano que se opone, es antagonista."
+  },
+  ex13: {
+    ok: "¡Exacto! Los rasgos psicológicos describen emociones, pensamientos, valores y actitudes internas, no la apariencia física.",
+    fail: "Incorrecto. Los rasgos psicológicos son internos: emociones, miedos, valores, formas de pensar. Los físicos describen el cuerpo y la apariencia."
+  },
+  ex14: {
+    ok: "¡Correcto! El antagonista es el personaje que se enfrenta al protagonista y genera el conflicto de la historia.",
+    fail: "Incorrecto. El antagonista es quien se opone al protagonista. No confundas con personaje redondo (profundidad) ni secundario (importancia menor)."
+  },
+  ex15: {
+    ok: "¡Perfecto! Harry evoluciona, enfrenta miedos, pierde seres queridos y madura: eso lo hace un personaje redondo y protagonista.",
+    fail: "Incorrecto. Harry cambia y crece a lo largo de toda la saga; eso lo hace redondo. Y como lleva la acción principal, es el protagonista."
+  },
+  ex16: {
+    ok: "¡Correcto! 'Mis manos' y 'nunca olvidaré' indican primera persona: el narrador es un personaje de la historia.",
+    fail: "Incorrecto. Las palabras 'mis' y 'nunca olvidaré' señalan claramente un narrador en primera persona que vive dentro de la historia."
+  },
+  ex17: {
+    ok: "¡Exacto! El narrador omnisciente lo sabe todo: pensamientos, sentimientos e intenciones de todos los personajes.",
+    fail: "Incorrecto. El narrador omnisciente es el que tiene acceso total a la mente de todos los personajes, incluyendo lo que nunca dicen en voz alta."
+  },
+  ex18: {
+    ok: "¡Correcto! El narrador solo describe acciones visibles y externas, sin revelar pensamientos: es un narrador observador.",
+    fail: "Incorrecto. Al no mencionar pensamientos ni emociones, este narrador solo observa lo externo. Se llama narrador observador o testigo."
+  },
+  ex19: {
+    ok: "¡Perfecto! Solo el narrador omnisciente puede saber lo que Luis 'sabía en el fondo'. Eso prueba acceso a su mente.",
+    fail: "Incorrecto. El narrador omnisciente es el único que puede revelar pensamientos no expresados en voz alta. Solo la opción C hace eso."
+  },
+  ex20: {
+    ok: "¡Correcto! El narrador es una construcción ficticia del autor. Sus puntos de vista no son necesariamente los del escritor real.",
+    fail: "Incorrecto. El narrador es siempre una voz ficticia creada dentro de la obra. El autor real puede ser muy diferente a quien narra la historia."
+  },
+  ex21: {
+    ok: "¡Correcto! El ámbito incluye el espacio, la época, la atmósfera y el contexto social o cultural. No es solo el lugar físico.",
+    fail: "Incorrecto. El ámbito es más que solo el lugar. Comprende el espacio físico, la época histórica, la atmósfera y el contexto social o cultural."
+  },
+  ex22: {
+    ok: "¡Bien! El fragmento describe la época (siglo XVII) y el espacio (calles empedradas, casas de adobe): elementos del ámbito.",
+    fail: "Incorrecto. El fragmento describe detalladamente la época histórica (siglo XVII) y el espacio físico: ambos son componentes del ámbito."
+  },
+  ex23: {
+    ok: "¡Exacto! El narrador interrumpe el presente (revisar fotos) para contar un evento del pasado (hace 15 años): eso es un flashback o tiempo retrospectivo.",
+    fail: "Incorrecto. Cuando el narrador va del presente al pasado, se llama tiempo retrospectivo o flashback (analepsis). No es lineal porque interrumpe el orden cronológico."
+  },
+  ex24: {
+    ok: "¡Correcto! Si los eventos se narran en el orden en que ocurrieron, de inicio a fin sin interrupciones, es tiempo lineal.",
+    fail: "Incorrecto. Narrar vida desde el nacimiento hasta la muerte en orden cronológico es tiempo lineal: los eventos se cuentan en el orden en que ocurrieron."
+  },
+  ex25: {
+    ok: "¡Perfecto! Anticipar algo que ocurrirá 'diez años después' es un tiempo prospectivo o flashforward (prolepsis).",
+    fail: "Incorrecto. El tiempo prospectivo (flashforward) anticipa eventos futuros. 'Diez años después...' es la señal de que el narrador nos muestra el futuro desde el presente."
+  }
+};
+
+const topicMap = {
+  ex1:'Tema central', ex2:'Tema central', ex3:'Tema central', ex4:'Tema central', ex5:'Tema central',
+  ex6:'Trama', ex7:'Trama', ex8:'Trama', ex9:'Trama', ex10:'Trama',
+  ex11:'Personajes', ex12:'Personajes', ex13:'Personajes', ex14:'Personajes', ex15:'Personajes',
+  ex16:'Narrador', ex17:'Narrador', ex18:'Narrador', ex19:'Narrador', ex20:'Narrador',
+  ex21:'Ámbito', ex22:'Ámbito', ex23:'Tiempo narrativo', ex24:'Tiempo narrativo', ex25:'Tiempo narrativo'
+};
+
+function ans(btn, id, isCorrect) {
+  if (state[id] !== undefined) return;
+  state[id] = isCorrect;
+  const container = btn.closest('.exercise');
+  const opts = container.querySelectorAll('.opt-btn');
+  opts.forEach(o => {
+    o.classList.add('disabled');
+    o.onclick = null;
+  });
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    opts.forEach(o => {
+      const oc = o.getAttribute('data-correct');
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').includes('true')) {
+        o.classList.add('reveal-correct');
+      }
+    });
+  }
+  const fb = document.getElementById('fb-' + id);
+  fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'fail');
+  fb.innerHTML = '<span class="fb-icon">' + (isCorrect ? '✓' : '✗') + '</span>' + fbTexts[id][isCorrect ? 'ok' : 'fail'];
+  updateProgress();
+}
+
+function updateProgress() {
+  const doneCount = Object.keys(state).length;
+  const correctCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount / total) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = doneCount + ' de ' + total + ' ejercicios completados · ' + correctCount + ' correctos';
+  document.getElementById('score-num').innerHTML = correctCount + '<span class="score-denom">/25</span>';
+  const msgs = [
+    'Sigue practicando, ¡tú puedes lograrlo!',
+    'Vas bien, no te rindas. Repasa la teoría.',
+    '¡Buen avance! Ya estás a la mitad del camino.',
+    '¡Muy bien! Estás dominando los temas.',
+    '¡Excelente! Estás listo para el examen.'
+  ];
+  const idx = correctCount < 6 ? 0 : correctCount < 11 ? 1 : correctCount < 16 ? 2 : correctCount < 22 ? 3 : 4;
+  document.getElementById('score-msg').textContent = msgs[idx];
+  renderTopicScores();
+}
+
+function renderTopicScores() {
+  const map = {};
+  for (const [eid, topic] of Object.entries(topicMap)) {
+    if (!map[topic]) map[topic] = { total: 0, done: 0, correct: 0 };
+    map[topic].total++;
+    if (state[eid] !== undefined) { map[topic].done++; if (state[eid]) map[topic].correct++; }
+  }
+  const grid = document.getElementById('topic-grid');
+  grid.innerHTML = '';
+  for (const [topic, d] of Object.entries(map)) {
+    const pct = d.done > 0 ? Math.round((d.correct / d.done) * 100) : 0;
+    const cls = pct >= 80 ? 'ts-good' : pct >= 50 ? 'ts-mid' : d.done > 0 ? 'ts-low' : '';
+    const card = document.createElement('div');
+    card.className = 'topic-score-card';
+    card.innerHTML = '<span class="ts-name">' + topic + '</span><span class="ts-val ' + cls + '">' + d.correct + '/' + d.done + ' (' + pct + '%)</span>';
+    grid.appendChild(card);
+  }
+}
+
+function showTab(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (name === 'puntaje') updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetAll() {
+  Object.keys(state).forEach(k => delete state[k]);
+  document.querySelectorAll('.opt-btn').forEach(o => {
+    o.classList.remove('correct', 'wrong', 'reveal-correct', 'disabled');
+  });
+  document.querySelectorAll('.feedback').forEach(f => {
+    f.className = 'feedback';
+    f.innerHTML = '';
+  });
+  document.querySelectorAll('.opt-btn').forEach(btn => {
+    const onclickStr = btn.getAttribute('onclick');
+    if (onclickStr) {
+      const m = onclickStr.match(/ans\(this,'(ex\d+)',(true|false)\)/);
+      if (m) {
+        btn.onclick = (function(b, id, val) {
+          return function() { ans(b, id, val); };
+        })(btn, m[1], m[2] === 'true');
+      }
+    }
+  });
+  document.getElementById('prog-fill').style.width = '0%';
+  document.getElementById('prog-text').textContent = '0 de 25 ejercicios completados · 0 correctos';
+  document.getElementById('score-num').innerHTML = '0<span class="score-denom">/25</span>';
+  document.getElementById('score-msg').textContent = 'Completa los ejercicios para ver tu resultado';
+  document.getElementById('topic-grid').innerHTML = '';
+}
+</script>
+</body>
+</html>
