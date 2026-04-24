@@ -1,0 +1,648 @@
+
+<style>
+  :root {
+    --blue-50: #E6F1FB; --blue-200: #85B7EB; --blue-600: #185FA5; --blue-800: #0C447C;
+    --teal-50: #E1F5EE; --teal-200: #5DCAA5; --teal-600: #0F6E56; --teal-800: #085041;
+    --amber-50: #FAEEDA; --amber-200: #EF9F27; --amber-600: #854F0B; --amber-800: #633806;
+    --coral-50: #FAECE7; --coral-200: #F0997B; --coral-600: #993C1D; --coral-800: #712B13;
+    --purple-50: #EEEDFE; --purple-200: #AFA9EC; --purple-600: #534AB7; --purple-800: #3C3489;
+    --green-50: #EAF3DE; --green-200: #97C459; --green-600: #3B6D11; --green-800: #27500A;
+    --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-600: #5F5E5A; --gray-800: #444441;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans, system-ui, sans-serif); }
+
+  .nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 1rem 0 1.5rem; }
+  .nav-btn {
+    padding: 8px 16px; border-radius: var(--border-radius-md, 8px);
+    border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary);
+    font-size: 13px; cursor: pointer; font-weight: 500;
+    color: var(--color-text-secondary); transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--color-background-secondary); }
+  .nav-btn.active { border-color: var(--blue-600); background: var(--blue-50); color: var(--blue-800); }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .topic-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 1rem 1.25rem; border-radius: var(--border-radius-lg, 12px);
+    margin-bottom: 1.5rem;
+  }
+  .topic-badge {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 16px; flex-shrink: 0;
+  }
+
+  .card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.75rem; }
+  .card-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1rem; line-height: 1.5; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .slider-row label { font-size: 13px; color: var(--color-text-secondary); min-width: 110px; }
+  .slider-row input[type=range] { flex: 1; }
+  .slider-val { font-size: 13px; font-weight: 500; min-width: 48px; text-align: right; color: var(--color-text-primary); }
+
+  .result-box {
+    padding: 0.75rem 1rem; border-radius: var(--border-radius-md, 8px);
+    margin-top: 0.75rem; font-size: 14px; font-weight: 500;
+  }
+  .result-blue { background: var(--blue-50); color: var(--blue-800); }
+  .result-teal { background: var(--teal-50); color: var(--teal-800); }
+  .result-amber { background: var(--amber-50); color: var(--amber-800); }
+  .result-green { background: var(--green-50); color: var(--green-800); }
+  .result-coral { background: var(--coral-50); color: var(--coral-800); }
+
+  .shape-display {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 180px; padding: 1rem;
+  }
+
+  .quiz-btn {
+    display: inline-block; padding: 8px 18px; border-radius: var(--border-radius-md, 8px);
+    border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary);
+    font-size: 13px; cursor: pointer; margin: 4px; transition: all 0.15s; color: var(--color-text-primary);
+  }
+  .quiz-btn:hover { background: var(--color-background-secondary); }
+  .quiz-btn.correct { background: var(--green-50); border-color: var(--green-600); color: var(--green-800); }
+  .quiz-btn.wrong { background: var(--coral-50); border-color: var(--coral-600); color: var(--coral-800); }
+
+  .stat-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .stat-table th { font-weight: 500; color: var(--color-text-secondary); text-align: left; padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .stat-table td { padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
+  .stat-table tr:last-child td { border-bottom: none; }
+
+  .prob-balls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .ball {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .ball:hover { transform: scale(1.1); }
+  .ball.selected { outline: 2px solid var(--blue-600); outline-offset: 2px; }
+
+  .formula-pill {
+    display: inline-block; background: var(--gray-50); color: var(--gray-800);
+    border-radius: 20px; padding: 4px 12px; font-size: 12px;
+    margin: 3px; border: 0.5px solid var(--gray-100);
+    font-family: var(--font-mono, monospace);
+  }
+
+  .feedback { font-size: 13px; margin-top: 8px; padding: 8px 12px; border-radius: var(--border-radius-md); }
+  .feedback.ok { background: var(--green-50); color: var(--green-800); }
+  .feedback.err { background: var(--coral-50); color: var(--coral-800); }
+
+  input[type=number] {
+    width: 90px; padding: 6px 10px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md, 8px);
+    font-size: 14px; background: var(--color-background-primary);
+    color: var(--color-text-primary);
+  }
+  .check-btn {
+    padding: 7px 16px; background: var(--blue-50); color: var(--blue-800);
+    border: 0.5px solid var(--blue-600); border-radius: var(--border-radius-md); font-size: 13px;
+    cursor: pointer; font-weight: 500; transition: all 0.15s;
+  }
+  .check-btn:hover { background: var(--blue-200); }
+</style>
+
+<h2 class="sr-only">Clase interactiva de matemáticas — Primer año</h2>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('volumen')">📦 Volumen</button>
+  <button class="nav-btn" onclick="showSection('areas')">🔷 Áreas compuestas</button>
+  <button class="nav-btn" onclick="showSection('estadistica')">📊 Estadística</button>
+  <button class="nav-btn" onclick="showSection('probabilidad')">🎲 Probabilidad</button>
+</div>
+
+<!-- SECCIÓN 1: VOLUMEN -->
+<div id="sec-volumen" class="section active">
+  <div class="topic-header" style="background: var(--blue-50);">
+    <div class="topic-badge" style="background: var(--blue-200); color: var(--blue-800);">📦</div>
+    <div>
+      <div style="font-size: 15px; font-weight: 500; color: var(--blue-800);">Volumen de prismas</div>
+      <div style="font-size: 13px; color: var(--blue-600);">Fórmula: V = Área de la base × altura</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Prisma rectangular (caja)</div>
+      <div class="card-sub">Mueve los deslizadores para explorar el volumen.</div>
+      <div class="shape-display">
+        <svg id="svg-rect" width="160" height="140" viewBox="0 0 160 140">
+          <g id="box-rect">
+            <polygon id="r-front" fill="#B5D4F4" stroke="#185FA5" stroke-width="1.5"/>
+            <polygon id="r-top" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+            <polygon id="r-side" fill="#85B7EB" stroke="#185FA5" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+      <div class="slider-row"><label>Largo (l)</label><input type="range" min="2" max="10" value="6" id="rl" oninput="updRect()"><span class="slider-val" id="rl-v">6</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Ancho (a)</label><input type="range" min="2" max="10" value="4" id="ra" oninput="updRect()"><span class="slider-val" id="ra-v">4</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Altura (h)</label><input type="range" min="2" max="10" value="5" id="rh" oninput="updRect()"><span class="slider-val" id="rh-v">5</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="result-box result-blue" id="rect-result">V = 6 × 4 × 5 = 120 cm³</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Prisma triangular</div>
+      <div class="card-sub">V = (base × altura del triángulo ÷ 2) × longitud</div>
+      <div class="shape-display">
+        <svg id="svg-tri" width="160" height="140" viewBox="0 0 160 140">
+          <polygon id="t-front" fill="#9FE1CB" stroke="#0F6E56" stroke-width="1.5"/>
+          <polygon id="t-back-t" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+          <polygon id="t-side1" fill="#5DCAA5" stroke="#0F6E56" stroke-width="1.5"/>
+          <polygon id="t-side2" fill="#5DCAA5" stroke="#0F6E56" stroke-width="1.5"/>
+          <polygon id="t-bot" fill="#9FE1CB" stroke="#0F6E56" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="slider-row"><label>Base (b)</label><input type="range" min="2" max="10" value="6" id="tb" oninput="updTri()"><span class="slider-val" id="tb-v">6</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Altura triáng. (h)</label><input type="range" min="2" max="8" value="4" id="th" oninput="updTri()"><span class="slider-val" id="th-v">4</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Longitud (l)</label><input type="range" min="2" max="12" value="7" id="tl" oninput="updTri()"><span class="slider-val" id="tl-v">7</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="result-box result-teal" id="tri-result">V = (6×4÷2) × 7 = 84 cm³</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ejercicio — ¿Cuál es el volumen?</div>
+    <div class="card-sub">Una caja tiene largo = 8 cm, ancho = 3 cm y altura = 5 cm. ¿Cuánto es su volumen?</div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <input type="number" id="vol-ans" placeholder="tu respuesta">
+      <span style="font-size:13px;color:var(--color-text-secondary)">cm³</span>
+      <button class="check-btn" onclick="checkVol()">Verificar</button>
+    </div>
+    <div class="feedback" id="vol-fb" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SECCIÓN 2: ÁREAS COMPUESTAS -->
+<div id="sec-areas" class="section">
+  <div class="topic-header" style="background: var(--amber-50);">
+    <div class="topic-badge" style="background: var(--amber-200); color: var(--amber-800);">🔷</div>
+    <div>
+      <div style="font-size: 15px; font-weight: 500; color: var(--amber-800);">Área de figuras compuestas</div>
+      <div style="font-size: 13px; color: var(--amber-600);">Área sombreada = Área total − Área interior</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Círculo dentro de un cuadrado</div>
+      <div class="card-sub">El área sombreada (esquinas) es el cuadrado menos el círculo.</div>
+      <div class="shape-display">
+        <svg id="svg-comp" width="160" height="160" viewBox="0 0 160 160">
+          <rect id="sq" x="20" y="20" width="120" height="120" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5" rx="2"/>
+          <circle id="ci" cx="80" cy="80" r="55" fill="white" stroke="#BA7517" stroke-width="1.5"/>
+          <text x="80" y="84" text-anchor="middle" font-size="11" fill="#633806">círculo</text>
+          <text x="34" y="36" font-size="9" fill="#633806">área</text>
+          <text x="34" y="46" font-size="9" fill="#633806">sombreada</text>
+        </svg>
+      </div>
+      <div class="slider-row"><label>Lado cuadrado</label><input type="range" min="6" max="20" value="12" id="sq-s" oninput="updComp()"><span class="slider-val" id="sq-sv">12</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="result-box result-amber" id="comp-result" style="font-size:13px; line-height:1.6"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Rectángulo con triángulo recortado</div>
+      <div class="card-sub">Área sombreada = Área rectángulo − Área triángulo</div>
+      <div class="shape-display">
+        <svg id="svg-rect-tri" width="160" height="140" viewBox="0 0 160 140">
+          <rect x="15" y="25" width="130" height="90" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.5" rx="2"/>
+          <polygon id="cut-tri" points="15,25 75,80 135,25" fill="white" stroke="#3B6D11" stroke-width="1.5"/>
+          <text x="80" y="120" text-anchor="middle" font-size="10" fill="#27500A">rectángulo</text>
+          <text x="80" y="50" text-anchor="middle" font-size="9" fill="#3B6D11">recortado</text>
+        </svg>
+      </div>
+      <div class="slider-row"><label>Largo rect.</label><input type="range" min="5" max="20" value="13" id="rt-l" oninput="updRectTri()"><span class="slider-val" id="rt-lv">13</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Alto rect.</label><input type="range" min="4" max="15" value="9" id="rt-h" oninput="updRectTri()"><span class="slider-val" id="rt-hv">9</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="slider-row"><label>Alto triáng.</label><input type="range" min="2" max="8" value="5" id="rt-th" oninput="updRectTri()"><span class="slider-val" id="rt-thv">5</span> <span style="font-size:12px;color:var(--color-text-secondary)">cm</span></div>
+      <div class="result-box result-green" id="rt-result" style="font-size:13px; line-height:1.6"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ejercicio — Área sombreada</div>
+    <div class="card-sub">Un cuadrado de 10 cm de lado contiene un círculo inscrito (radio = 5 cm). ¿Cuál es el área sombreada? Usa π ≈ 3.14159. Redondea a 2 decimales.</div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <input type="number" id="area-ans" placeholder="tu respuesta" step="0.01">
+      <span style="font-size:13px;color:var(--color-text-secondary)">cm²</span>
+      <button class="check-btn" onclick="checkArea()">Verificar</button>
+    </div>
+    <div class="feedback" id="area-fb" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SECCIÓN 3: ESTADÍSTICA -->
+<div id="sec-estadistica" class="section">
+  <div class="topic-header" style="background: var(--purple-50);">
+    <div class="topic-badge" style="background: var(--purple-200); color: var(--purple-800);">📊</div>
+    <div>
+      <div style="font-size: 15px; font-weight: 500; color: var(--purple-800);">Estadística descriptiva</div>
+      <div style="font-size: 13px; color: var(--purple-600);">Frecuencias, porcentajes, histogramas y gráfica de pastel</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tabla de frecuencias interactiva</div>
+    <div class="card-sub">Calificaciones de 20 estudiantes. Observa cómo se calculan automáticamente los valores.</div>
+    <div style="display:flex; gap:6px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
+      <span style="font-size:13px; color:var(--color-text-secondary);">Datos:</span>
+      <span class="formula-pill">F. Relativa = FA ÷ n</span>
+      <span class="formula-pill">% = FR × 100</span>
+      <span class="formula-pill">Grados = FR × 360</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="stat-table">
+        <thead>
+          <tr>
+            <th>Calificación</th>
+            <th>Frec. Absoluta</th>
+            <th>Frec. Relativa</th>
+            <th>Porcentaje</th>
+            <th>Grados (pastel)</th>
+          </tr>
+        </thead>
+        <tbody id="stat-tbody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:13px; color:var(--color-text-secondary);">n total = <strong id="stat-n">20</strong></span>
+      <span style="font-size:13px; color:var(--color-text-secondary);">Suma grados = <strong id="stat-deg">360</strong>°</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Histograma (frecuencia absoluta)</div>
+      <svg id="hist-svg" width="100%" viewBox="0 0 300 180" style="display:block; margin-top:4px;"></svg>
+    </div>
+    <div class="card">
+      <div class="card-title">Gráfica de pastel</div>
+      <svg id="pie-svg" width="100%" viewBox="0 0 260 200" style="display:block; margin-top:4px;"></svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ejercicio rápido</div>
+    <div class="card-sub">En una encuesta de 40 estudiantes, 10 prefieren matemáticas. ¿Cuántos grados le corresponden en la gráfica de pastel?</div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <input type="number" id="stat-ans" placeholder="grados">
+      <span style="font-size:13px;color:var(--color-text-secondary)">°</span>
+      <button class="check-btn" onclick="checkStat()">Verificar</button>
+    </div>
+    <div class="feedback" id="stat-fb" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SECCIÓN 4: PROBABILIDAD -->
+<div id="sec-probabilidad" class="section">
+  <div class="topic-header" style="background: var(--coral-50);">
+    <div class="topic-badge" style="background: var(--coral-200); color: var(--coral-800);">🎲</div>
+    <div>
+      <div style="font-size: 15px; font-weight: 500; color: var(--coral-800);">Probabilidad simple</div>
+      <div style="font-size: 13px; color: var(--coral-600);">P(evento) = Casos favorables ÷ Casos totales</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Bolsa de canicas</div>
+      <div class="card-sub">Selecciona un color para ver su probabilidad.</div>
+      <div class="prob-balls" id="balls-container"></div>
+      <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;" id="ball-legend"></div>
+      <div class="result-box result-coral" id="ball-result" style="margin-top:10px; font-size:13px; line-height:1.7">Selecciona un color de canica.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Dado y moneda</div>
+      <div class="card-sub">Practica calculando probabilidades simples.</div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">Un dado de 6 caras — elige un evento:</div>
+        <div id="dice-btns">
+          <button class="quiz-btn" onclick="diceProb('par',this)">Número par</button>
+          <button class="quiz-btn" onclick="diceProb('mayor4',this)">Mayor que 4</button>
+          <button class="quiz-btn" onclick="diceProb('multiplo3',this)">Múltiplo de 3</button>
+          <button class="quiz-btn" onclick="diceProb('primo',this)">Número primo</button>
+        </div>
+        <div class="result-box result-amber" id="dice-result" style="margin-top:8px; font-size:13px; line-height:1.7; display:none;"></div>
+      </div>
+      <div style="border-top:0.5px solid var(--color-border-tertiary); padding-top:12px;">
+        <div style="font-size:13px; color:var(--color-text-secondary); margin-bottom:6px;">Una moneda — ¿qué tan probable es cara?</div>
+        <div class="result-box" style="background:var(--gray-50); color:var(--gray-800); font-size:13px; line-height:1.7;">
+          P(cara) = 1 ÷ 2 = 0.5 = 50%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ejercicio — Probabilidad simple</div>
+    <div class="card-sub">En una bolsa hay 3 pelotas rojas, 5 azules y 2 verdes. ¿Cuál es la probabilidad de sacar una pelota azul? Escribe el resultado como decimal (ej: 0.5).</div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <input type="number" id="prob-ans" placeholder="0.0" step="0.01">
+      <button class="check-btn" onclick="checkProb()">Verificar</button>
+    </div>
+    <div class="feedback" id="prob-fb" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function updRect() {
+  const l = +document.getElementById('rl').value;
+  const a = +document.getElementById('ra').value;
+  const h = +document.getElementById('rh').value;
+  document.getElementById('rl-v').textContent = l;
+  document.getElementById('ra-v').textContent = a;
+  document.getElementById('rh-v').textContent = h;
+  const V = l * a * h;
+  document.getElementById('rect-result').textContent = `V = ${l} × ${a} × ${h} = ${V} cm³`;
+  drawBox(l, a, h);
+}
+
+function drawBox(l, a, h) {
+  const scale = 9; const offX = 140; const offY = 60;
+  const lw = l * scale * 0.6; const aw = a * scale * 0.35; const hw = h * scale * 0.5;
+  const fx1 = offX - lw/2, fx2 = offX + lw/2;
+  const fy1 = offY, fy2 = offY + hw;
+  const dx = aw * 0.7, dy = aw * 0.4;
+  document.getElementById('r-front').setAttribute('points', `${fx1},${fy1} ${fx2},${fy1} ${fx2},${fy2} ${fx1},${fy2}`);
+  document.getElementById('r-top').setAttribute('points', `${fx1},${fy1} ${fx2},${fy1} ${fx2+dx},${fy1-dy} ${fx1+dx},${fy1-dy}`);
+  document.getElementById('r-side').setAttribute('points', `${fx2},${fy1} ${fx2+dx},${fy1-dy} ${fx2+dx},${fy2-dy} ${fx2},${fy2}`);
+}
+
+function updTri() {
+  const b = +document.getElementById('tb').value;
+  const h = +document.getElementById('th').value;
+  const l = +document.getElementById('tl').value;
+  document.getElementById('tb-v').textContent = b;
+  document.getElementById('th-v').textContent = h;
+  document.getElementById('tl-v').textContent = l;
+  const A = (b * h) / 2;
+  const V = A * l;
+  document.getElementById('tri-result').textContent = `V = (${b}×${h}÷2) × ${l} = ${V} cm³`;
+}
+
+function updComp() {
+  const s = +document.getElementById('sq-s').value;
+  document.getElementById('sq-sv').textContent = s;
+  const r = s / 2;
+  const aSq = s * s;
+  const aCi = Math.PI * r * r;
+  const somb = aSq - aCi;
+  document.getElementById('comp-result').innerHTML =
+    `Cuadrado: ${s}² = ${aSq} cm²<br>` +
+    `Círculo: π×${r}² ≈ ${aCi.toFixed(2)} cm²<br>` +
+    `Área sombreada ≈ ${somb.toFixed(2)} cm²`;
+  const scale = 110 / s;
+  const cx = 80, cy = 80, rv = Math.min(55, (s/2) * scale * 0.95);
+  document.getElementById('ci').setAttribute('r', rv.toFixed(1));
+}
+
+function updRectTri() {
+  const l = +document.getElementById('rt-l').value;
+  const h = +document.getElementById('rt-h').value;
+  const th = +document.getElementById('rt-th').value;
+  document.getElementById('rt-lv').textContent = l;
+  document.getElementById('rt-hv').textContent = h;
+  document.getElementById('rt-thv').textContent = th;
+  const aRect = l * h;
+  const aTri = (l * th) / 2;
+  const somb = aRect - aTri;
+  document.getElementById('rt-result').innerHTML =
+    `Rectángulo: ${l}×${h} = ${aRect} cm²<br>` +
+    `Triángulo: ${l}×${th}÷2 = ${aTri} cm²<br>` +
+    `Área sombreada = ${somb} cm²`;
+}
+
+function checkVol() {
+  const ans = +document.getElementById('vol-ans').value;
+  const fb = document.getElementById('vol-fb');
+  fb.style.display = 'block';
+  if (ans === 120) { fb.className='feedback ok'; fb.textContent='¡Correcto! 8×3×5 = 120 cm³'; }
+  else { fb.className='feedback err'; fb.textContent=`No exactamente. Recuerda: V = largo × ancho × alto = 8 × 3 × 5`; }
+}
+
+function checkArea() {
+  const ans = +document.getElementById('area-ans').value;
+  const correct = +(100 - Math.PI * 25).toFixed(2);
+  const fb = document.getElementById('area-fb');
+  fb.style.display = 'block';
+  if (Math.abs(ans - correct) < 0.5) { fb.className='feedback ok'; fb.textContent=`¡Correcto! 10² − π×5² ≈ 100 − 78.54 ≈ ${correct} cm²`; }
+  else { fb.className='feedback err'; fb.textContent=`Revisa: Área cuadrado = 10² = 100 cm². Área círculo = π×5² ≈ 78.54 cm². Resta los dos.`; }
+}
+
+const statData = [
+  { cal: 6, fa: 3 }, { cal: 7, fa: 6 }, { cal: 8, fa: 7 },
+  { cal: 9, fa: 3 }, { cal: 10, fa: 1 }
+];
+const n = statData.reduce((s, d) => s + d.fa, 0);
+const paletteStat = ['#B5D4F4','#9FE1CB','#AFA9EC','#F0997B','#FAC775'];
+
+function buildStatTable() {
+  const tbody = document.getElementById('stat-tbody');
+  tbody.innerHTML = '';
+  let totalDeg = 0;
+  statData.forEach((d, i) => {
+    const fr = d.fa / n;
+    const pct = fr * 100;
+    const deg = fr * 360;
+    totalDeg += deg;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d.cal}</td><td>${d.fa}</td><td>${fr.toFixed(2)}</td><td>${pct.toFixed(1)}%</td><td>${deg.toFixed(1)}°</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('stat-n').textContent = n;
+  document.getElementById('stat-deg').textContent = Math.round(totalDeg) + '°';
+  drawHistogram();
+  drawPie();
+}
+
+function drawHistogram() {
+  const svg = document.getElementById('hist-svg');
+  svg.innerHTML = '';
+  const W = 300, H = 180, pad = 36, bpad = 28;
+  const maxFA = Math.max(...statData.map(d => d.fa));
+  const bw = (W - pad - 16) / statData.length;
+  statData.forEach((d, i) => {
+    const bh = ((d.fa / maxFA) * (H - pad - bpad));
+    const x = pad + i * bw + 2;
+    const y = H - bpad - bh;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', y);
+    rect.setAttribute('width', bw - 4); rect.setAttribute('height', bh);
+    rect.setAttribute('fill', paletteStat[i]); rect.setAttribute('stroke', '#185FA5');
+    rect.setAttribute('stroke-width', '0.8'); rect.setAttribute('rx', '2');
+    svg.appendChild(rect);
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x', x + (bw-4)/2); lbl.setAttribute('y', H - bpad + 14);
+    lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-size','11');
+    lbl.setAttribute('fill','var(--color-text-secondary)');
+    lbl.textContent = d.cal; svg.appendChild(lbl);
+    const val = document.createElementNS('http://www.w3.org/2000/svg','text');
+    val.setAttribute('x', x + (bw-4)/2); val.setAttribute('y', y - 3);
+    val.setAttribute('text-anchor','middle'); val.setAttribute('font-size','10');
+    val.setAttribute('fill','var(--color-text-secondary)');
+    val.textContent = d.fa; svg.appendChild(val);
+  });
+  const ax = document.createElementNS('http://www.w3.org/2000/svg','line');
+  ax.setAttribute('x1',pad); ax.setAttribute('y1', H-bpad);
+  ax.setAttribute('x2',W-10); ax.setAttribute('y2', H-bpad);
+  ax.setAttribute('stroke','var(--color-border-secondary)'); ax.setAttribute('stroke-width','0.5');
+  svg.appendChild(ax);
+  const ayLabel = document.createElementNS('http://www.w3.org/2000/svg','text');
+  ayLabel.setAttribute('x', 10); ayLabel.setAttribute('y', 80);
+  ayLabel.setAttribute('font-size','9'); ayLabel.setAttribute('fill','var(--color-text-secondary)');
+  ayLabel.setAttribute('text-anchor','middle');
+  ayLabel.setAttribute('transform','rotate(-90,10,80)');
+  ayLabel.textContent='frec. absoluta'; svg.appendChild(ayLabel);
+}
+
+function drawPie() {
+  const svg = document.getElementById('pie-svg');
+  svg.innerHTML = '';
+  const cx = 90, cy = 100, r = 72;
+  let startAngle = -Math.PI / 2;
+  const fracs = statData.map(d => d.fa / n);
+  fracs.forEach((fr, i) => {
+    const angle = fr * 2 * Math.PI;
+    const endAngle = startAngle + angle;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const large = angle > Math.PI ? 1 : 0;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z`);
+    path.setAttribute('fill', paletteStat[i]); path.setAttribute('stroke','white'); path.setAttribute('stroke-width','1.5');
+    svg.appendChild(path);
+    const midA = startAngle + angle / 2;
+    const lx = cx + (r * 0.65) * Math.cos(midA);
+    const ly = cy + (r * 0.65) * Math.sin(midA);
+    const lt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lt.setAttribute('x', lx); lt.setAttribute('y', ly + 4);
+    lt.setAttribute('text-anchor','middle'); lt.setAttribute('font-size','10'); lt.setAttribute('fill','#0C447C');
+    lt.textContent = statData[i].cal;
+    svg.appendChild(lt);
+    startAngle = endAngle;
+  });
+  const legendX = 175;
+  statData.forEach((d, i) => {
+    const ly = 28 + i * 30;
+    const rc = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rc.setAttribute('x', legendX); rc.setAttribute('y', ly - 8);
+    rc.setAttribute('width', 12); rc.setAttribute('height', 12);
+    rc.setAttribute('rx','2'); rc.setAttribute('fill', paletteStat[i]);
+    svg.appendChild(rc);
+    const lt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lt.setAttribute('x', legendX + 16); lt.setAttribute('y', ly + 2);
+    lt.setAttribute('font-size','10'); lt.setAttribute('fill','var(--color-text-secondary)');
+    lt.textContent = `Cal. ${d.cal}: ${(d.fa/n*100).toFixed(0)}%`;
+    svg.appendChild(lt);
+  });
+}
+
+function checkStat() {
+  const ans = +document.getElementById('stat-ans').value;
+  const fb = document.getElementById('stat-fb');
+  fb.style.display = 'block';
+  if (ans === 90) { fb.className='feedback ok'; fb.textContent='¡Correcto! F.R. = 10÷40 = 0.25. Grados = 0.25 × 360 = 90°'; }
+  else { fb.className='feedback err'; fb.textContent='Recuerda: F.Relativa = 10÷40 = 0.25, luego multiplica × 360.'; }
+}
+
+const ballColors = [
+  { color:'#F0997B', label:'Rojo', count:4 },
+  { color:'#85B7EB', label:'Azul', count:5 },
+  { color:'#9FE1CB', label:'Verde', count:3 },
+  { color:'#FAC775', label:'Amarillo', count:2 },
+];
+let selColor = null;
+
+function buildBalls() {
+  const cont = document.getElementById('balls-container');
+  const leg = document.getElementById('ball-legend');
+  const total = ballColors.reduce((s,c) => s + c.count, 0);
+  ballColors.forEach((c, ci) => {
+    for (let i = 0; i < c.count; i++) {
+      const b = document.createElement('div');
+      b.className = 'ball';
+      b.style.background = c.color;
+      b.style.color = '#444';
+      b.title = c.label;
+      b.textContent = c.label[0];
+      b.onclick = () => selectBall(ci, total);
+      cont.appendChild(b);
+    }
+    const l = document.createElement('span');
+    l.style.cssText = `font-size:12px; color:var(--color-text-secondary); display:flex; align-items:center; gap:4px;`;
+    l.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color}"></span>${c.label}: ${c.count}`;
+    leg.appendChild(l);
+  });
+}
+
+function selectBall(ci, total) {
+  const c = ballColors[ci];
+  const fr = c.count / total;
+  document.getElementById('ball-result').innerHTML =
+    `Color: ${c.label}<br>` +
+    `P(${c.label}) = ${c.count} ÷ ${total} = ${fr.toFixed(2)} = ${(fr*100).toFixed(0)}%`;
+  document.querySelectorAll('.ball').forEach(b => b.classList.remove('selected'));
+  const balls = document.querySelectorAll('.ball');
+  let idx = 0;
+  ballColors.forEach((bc, bci) => {
+    for (let i = 0; i < bc.count; i++) {
+      if (bci === ci) balls[idx].classList.add('selected');
+      idx++;
+    }
+  });
+}
+
+const diceData = {
+  par: { favorables: [2,4,6], label: 'par' },
+  mayor4: { favorables: [5,6], label: 'mayor que 4' },
+  multiplo3: { favorables: [3,6], label: 'múltiplo de 3' },
+  primo: { favorables: [2,3,5], label: 'primo' },
+};
+
+function diceProb(key, btn) {
+  document.querySelectorAll('#dice-btns .quiz-btn').forEach(b => b.className = 'quiz-btn');
+  btn.classList.add('correct');
+  const d = diceData[key];
+  const fr = d.favorables.length / 6;
+  const res = document.getElementById('dice-result');
+  res.style.display = 'block';
+  res.innerHTML = `Evento: número ${d.label}<br>Casos favorables: {${d.favorables.join(', ')}} → ${d.favorables.length}<br>P = ${d.favorables.length} ÷ 6 = ${fr.toFixed(4).replace(/0+$/,'')}… ≈ ${(fr*100).toFixed(1)}%`;
+}
+
+function checkProb() {
+  const ans = +document.getElementById('prob-ans').value;
+  const correct = 5 / 10;
+  const fb = document.getElementById('prob-fb');
+  fb.style.display = 'block';
+  if (Math.abs(ans - correct) < 0.01) { fb.className='feedback ok'; fb.textContent='¡Correcto! P(azul) = 5÷10 = 0.5 = 50%'; }
+  else { fb.className='feedback err'; fb.textContent='Recuerda: total = 3+5+2 = 10 canicas. P(azul) = 5÷10.'; }
+}
+
+drawBox(6,4,5);
+updComp();
+updRectTri();
+buildStatTable();
+buildBalls();
+</script>
