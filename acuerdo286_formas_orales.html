@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formas Orales de la Comunicación · Acuerdo 286</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root{
+  --bg:#f7f4ef;
+  --bg2:#ffffff;
+  --bg3:#f0ece4;
+  --bg4:#e8e2d8;
+  --border:#ddd7cc;
+  --border2:#c9c0b2;
+  --text:#1c1711;
+  --text2:#4a4236;
+  --text3:#8a7d6e;
+  --rust:#c24b2a;
+  --rust-bg:#fdf0ec;
+  --rust-border:#f0c0b0;
+  --teal:#1a7a6e;
+  --teal-bg:#ebf7f5;
+  --teal-border:#a8ddd7;
+  --blue:#1e4f8c;
+  --blue-bg:#eef3fb;
+  --blue-border:#b0c8f0;
+  --amber:#9a6b00;
+  --amber-bg:#fdf6e3;
+  --amber-border:#e8d090;
+  --purple:#5a2d8c;
+  --purple-bg:#f4eefb;
+  --purple-border:#ccb0e8;
+  --green:#1e6e40;
+  --green-bg:#edf7f1;
+  --green-border:#a0d8b8;
+  --red:#c0392b;
+  --red-bg:#fdf0ee;
+  --red-border:#f0b8b0;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',system-ui,sans-serif;font-size:15px;line-height:1.65;min-height:100vh}
+
+/* HEADER */
+.hero{background:var(--text);color:#f7f4ef;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;right:0;width:400px;height:100%;background:linear-gradient(135deg,transparent 60%,rgba(194,75,42,.15) 100%);pointer-events:none}
+.hero::after{content:'6.4';position:absolute;right:2rem;bottom:-1rem;font-family:'Fraunces',serif;font-size:120px;font-weight:700;color:rgba(255,255,255,.05);line-height:1;pointer-events:none}
+.hero-inner{max-width:900px;margin:0 auto;position:relative}
+.hero-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(247,244,239,.2);color:rgba(247,244,239,.7);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.hero h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(26px,5vw,44px);line-height:1.1;margin-bottom:8px;font-weight:700}
+.hero h1 em{font-style:italic;color:#f0b890}
+.hero p{font-size:14px;color:rgba(247,244,239,.65);max-width:520px}
+
+/* PROGRESS */
+.prog-section{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 2rem;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.prog-section>span{font-size:13px;color:var(--text3);white-space:nowrap}
+.prog-track{flex:1;min-width:100px;background:var(--bg3);height:5px;border-radius:3px}
+.prog-fill{height:5px;border-radius:3px;background:var(--rust);transition:width .5s ease;width:0%}
+#score-disp{font-size:13px;color:var(--teal);font-weight:600;margin-left:auto}
+
+/* NAV */
+nav{background:var(--bg2);border-bottom:2px solid var(--border);padding:0 1.5rem;display:flex;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;padding:13px 16px;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all .2s}
+nav button:hover{color:var(--text2)}
+nav button.active{color:var(--rust);border-bottom-color:var(--rust)}
+
+/* LAYOUT */
+main{max-width:900px;margin:0 auto;padding:2rem}
+.section{display:none}
+.section.active{display:block}
+
+/* THEORY */
+.t-block{margin-bottom:2.5rem}
+.t-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.t-code{background:var(--rust-bg);border:1px solid var(--rust-border);color:var(--rust);font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;letter-spacing:.05em}
+.t-block h2{font-family:'Fraunces',serif;font-size:22px;color:var(--text);line-height:1.25;font-weight:700}
+.t-block>p{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:12px}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card .lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.card p,.card li{font-size:14px;color:var(--text2);line-height:1.65}
+.card ul,.card ol{padding-left:1.2rem}
+.card li{margin-bottom:5px}
+.lbl-rust{color:var(--rust)}
+.lbl-teal{color:var(--teal)}
+.lbl-blue{color:var(--blue)}
+.lbl-amber{color:var(--amber)}
+.lbl-purple{color:var(--purple)}
+.lbl-green{color:var(--green)}
+
+.tip{background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0}
+.tip .lbl{color:var(--amber)}
+.tip p{font-size:13px;color:#6b4800;line-height:1.65}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:8px;margin:10px 0}
+.pill{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text2)}
+.pill strong{display:block;font-size:12px;color:var(--text);font-weight:600;margin-bottom:3px}
+.pill.rust{background:var(--rust-bg);border-color:var(--rust-border)}
+.pill.teal{background:var(--teal-bg);border-color:var(--teal-border)}
+.pill.blue{background:var(--blue-bg);border-color:var(--blue-border)}
+.pill.purple{background:var(--purple-bg);border-color:var(--purple-border)}
+.pill.green{background:var(--green-bg);border-color:var(--green-border)}
+.pill.amber{background:var(--amber-bg);border-color:var(--amber-border)}
+
+.quote-block{background:var(--bg3);border-left:3px solid var(--border2);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:var(--text2);line-height:1.65;font-style:italic}
+.quote-block b{font-style:normal;color:var(--text);font-weight:600}
+
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.compare-table th{background:var(--text);color:#f7f4ef;padding:8px 12px;text-align:left;font-weight:600;font-size:12px}
+.compare-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.compare-table tr:nth-child(even) td{background:var(--bg3)}
+
+hr.div{border:none;border-top:1px solid var(--border);margin:2rem 0}
+
+/* EXERCISES */
+.ex-header{display:flex;align-items:baseline;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--border)}
+.ex-header h2{font-family:'Fraunces',serif;font-size:24px;color:var(--text);font-weight:700}
+.ex-header span{font-size:13px;color:var(--text3)}
+
+.exercise{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;margin-bottom:1.1rem;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:border-color .2s}
+.exercise.ok{border-left:4px solid var(--teal)}
+.exercise.bad{border-left:4px solid var(--red)}
+
+.ex-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ex-n{width:26px;height:26px;border-radius:50%;background:var(--text);color:#f7f4ef;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:3px 9px;border-radius:4px}
+.tag-rust{background:var(--rust-bg);color:var(--rust);border:1px solid var(--rust-border)}
+.tag-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border)}
+.tag-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.tag-purple{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
+.tag-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.tag-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+
+.ex-q{font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.5}
+.ex-frag{background:var(--bg3);border-left:3px solid var(--border2);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--text2);line-height:1.65;font-style:italic}
+.ex-frag b{font-style:normal;font-weight:600;color:var(--text)}
+
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:left;font-family:'Instrument Sans',sans-serif;font-size:13px;color:var(--text2);cursor:pointer;transition:all .15s;display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.opt:hover:not(.dis){background:var(--bg3);border-color:var(--border2);color:var(--text)}
+.opt .lt{font-weight:700;color:var(--text3);min-width:14px;flex-shrink:0;font-size:12px;margin-top:1px}
+.opt.cor{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.opt.cor .lt{color:var(--green)}
+.opt.wrg{background:var(--red-bg);border-color:var(--red-border);color:var(--red)}
+.opt.wrg .lt{color:var(--red)}
+.opt.dis{cursor:default}
+
+.fb{margin-top:10px;padding:11px 14px;border-radius:8px;font-size:13px;line-height:1.65;display:none}
+.fb.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.fb.bad{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.fb .ic{font-weight:700;margin-right:5px}
+
+/* SCORE */
+.score-wrap{text-align:center;padding:2.5rem 1rem 2rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.score-big{font-family:'Fraunces',serif;font-size:88px;line-height:1;color:var(--text);font-weight:700}
+.score-den{font-family:'Fraunces',serif;font-size:44px;color:var(--text3)}
+.score-msg{font-size:15px;color:var(--text2);margin-top:12px;font-style:italic}
+.reset-btn{margin-top:20px;padding:10px 28px;background:var(--text);color:#f7f4ef;border:none;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.reset-btn:hover{opacity:.85}
+
+.t-results{display:flex;flex-direction:column;gap:8px}
+.t-row{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.t-name{flex:1;font-size:13px;font-weight:600;color:var(--text)}
+.t-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.t-track{width:80px;background:var(--bg3);height:6px;border-radius:3px}
+.t-fill{height:6px;border-radius:3px;transition:width .5s}
+.t-fill.gr{background:var(--teal)}
+.t-fill.md{background:var(--amber)}
+.t-fill.lw{background:var(--red)}
+.t-sc{font-size:14px;font-weight:700}
+.t-sc.gr{color:var(--teal)}
+.t-sc.md{color:var(--amber)}
+.t-sc.lw{color:var(--red)}
+
+@media(max-width:600px){main{padding:1rem}.grid2{grid-template-columns:1fr 1fr}nav button{font-size:11px;padding:12px 10px}.compare-table{font-size:12px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-chip">Acuerdo 286 · Acredita Bachillerato</div>
+    <h1>Formas Orales de<br><em>la Comunicación</em></h1>
+    <p>Bloque 6.4 — Teoría completa de exposición oral, diálogo, debate y sus funciones + 20 ejercicios.</p>
+  </div>
+</header>
+
+<div class="prog-section">
+  <span id="prog-lbl">0 / 20 completados</span>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <span id="score-disp">0 correctos</span>
+</div>
+
+<nav>
+  <button class="active" onclick="showTab('teoria',this)">Teoría</button>
+  <button onclick="showTab('s1',this)">6.4.1 Exposición oral</button>
+  <button onclick="showTab('s2',this)">6.4.2 Diálogo</button>
+  <button onclick="showTab('s3',this)">6.4.3 Debate</button>
+  <button onclick="showTab('s4',this)">6.4.4 Funciones</button>
+  <button onclick="showTab('score',this)">Mi resultado</button>
+</nav>
+
+<main>
+
+<!-- ========== TEORÍA ========== -->
+<div class="section active" id="tab-teoria">
+
+  <div class="t-block">
+    <div class="t-head"><span class="t-code">6.4.1</span><h2>Elementos de la exposición oral</h2></div>
+    <p>La <strong>exposición oral</strong> es una forma de comunicación donde una persona presenta información sobre un tema ante un público. Para realizarla correctamente se deben dominar varios elementos.</p>
+    <div class="grid2">
+      <div class="pill rust"><strong>Planeación</strong>Organizar el contenido antes de hablar: definir el tema, el público y el orden de las ideas.</div>
+      <div class="pill teal"><strong>Apoyos gráficos</strong>Materiales visuales que complementan la exposición: diapositivas, mapas, gráficas, carteles, imágenes.</div>
+      <div class="pill blue"><strong>Manejo de la voz</strong>Controlar el volumen, el tono, la velocidad y la pronunciación para que el público escuche y entienda con claridad.</div>
+      <div class="pill purple"><strong>Uso del espacio</strong>Posición del cuerpo, movimiento y gestos frente al público para reforzar el mensaje.</div>
+      <div class="pill amber"><strong>Control del tiempo</strong>Distribuir el tiempo disponible entre los distintos puntos de la exposición sin excederse ni quedarse corto.</div>
+    </div>
+    <div class="tip"><div class="lbl">Consejo clave</div><p>El examen puede mostrarte una situación de exposición y preguntarte qué elemento se está aplicando. Recuerda: <em>planeación</em> (antes), <em>apoyos gráficos</em> (visuales), <em>voz</em> (cómo suena), <em>espacio</em> (cuerpo/movimiento), <em>tiempo</em> (duración).</p></div>
+  </div>
+
+  <hr class="div">
+
+  <div class="t-block">
+    <div class="t-head"><span class="t-code">6.4.2</span><h2>Características del diálogo</h2></div>
+    <p>El <strong>diálogo</strong> es una forma oral de comunicación en la que dos o más personas intercambian información, ideas u opiniones de manera ordenada y respetuosa.</p>
+    <div class="grid2">
+      <div class="pill rust"><strong>Preguntas detonadoras</strong>Preguntas abiertas que inician o impulsan la conversación y generan reflexión. Ej: "¿Qué piensas sobre…?", "¿Cómo crees que…?"</div>
+      <div class="pill teal"><strong>Intercambio de información</strong>Cada participante aporta ideas, datos o puntos de vista al tema que se está discutiendo.</div>
+      <div class="pill blue"><strong>Turno de la palabra</strong>Cada participante espera su momento para hablar, sin interrumpir. Garantiza orden y respeto en la conversación.</div>
+    </div>
+    <div class="quote-block">"¿Qué solución propondrías para reducir la contaminación en tu ciudad?" → Esta es una <b>pregunta detonadora</b>: abre el diálogo y provoca reflexión.<br><br>"Yo creo que deberíamos usar más transporte público." / "Yo pienso que el problema es industrial." → Esto es <b>intercambio de información</b>: cada uno aporta su perspectiva en su <b>turno</b>.</div>
+    <div class="tip"><div class="lbl">Consejo clave</div><p>Las <em>preguntas detonadoras</em> generan el diálogo. El <em>intercambio</em> es el proceso. El <em>turno de la palabra</em> es la regla de orden.</p></div>
+  </div>
+
+  <hr class="div">
+
+  <div class="t-block">
+    <div class="t-head"><span class="t-code">6.4.3</span><h2>Elementos del debate</h2></div>
+    <p>El <strong>debate</strong> es una forma oral de comunicación en la que dos o más personas defienden posturas opuestas sobre un tema, con argumentos sustentados, ante un moderador y un público.</p>
+    <div class="grid2">
+      <div class="pill rust"><strong>Exposición de posturas</strong>Cada participante presenta claramente su posición: a favor o en contra del tema.</div>
+      <div class="pill teal"><strong>Contraposición de ideas</strong>Los participantes rebaten los argumentos del lado contrario con lógica y evidencia, no con ofensas.</div>
+      <div class="pill blue"><strong>Desarrollo de argumentos</strong>Cada postura se sustenta con razones, datos, ejemplos o evidencias que la hacen convincente.</div>
+    </div>
+    <div class="card">
+      <div class="lbl lbl-blue">Diferencia clave: Diálogo vs Debate</div>
+      <table class="compare-table">
+        <tr><th>Característica</th><th>Diálogo</th><th>Debate</th></tr>
+        <tr><td>Objetivo</td><td>Intercambiar información, llegar a acuerdos</td><td>Defender una postura y refutar la contraria</td></tr>
+        <tr><td>Posturas</td><td>No necesariamente opuestas</td><td>Siempre opuestas (a favor / en contra)</td></tr>
+        <tr><td>Tono</td><td>Conversacional y abierto</td><td>Argumentativo y estructurado</td></tr>
+        <tr><td>Moderador</td><td>No siempre necesario</td><td>Generalmente hay uno</td></tr>
+      </table>
+    </div>
+    <div class="tip"><div class="lbl">Consejo clave</div><p>En el debate siempre hay dos posiciones <em>opuestas</em> y argumentos que las sustentan. En el diálogo las posiciones pueden coincidir y el objetivo es el intercambio, no ganar.</p></div>
+  </div>
+
+  <hr class="div">
+
+  <div class="t-block">
+    <div class="t-head"><span class="t-code">6.4.4</span><h2>Funciones de las formas orales de la comunicación</h2></div>
+    <p>Cada forma oral cumple funciones específicas según el contexto y el propósito comunicativo.</p>
+    <div class="grid2">
+      <div class="pill green"><strong>Función del diálogo</strong>Facilitar el intercambio igualitario de ideas, fomentar la escucha activa, construir acuerdos y fortalecer relaciones entre las personas.</div>
+      <div class="pill teal"><strong>Función del debate</strong>Desarrollar el pensamiento crítico, practicar la argumentación, analizar distintas perspectivas sobre un tema y llegar a conclusiones informadas.</div>
+      <div class="pill blue"><strong>Función de la exposición oral</strong>Transmitir información organizada a un público, explicar un tema con claridad y persuadir o instruir a los oyentes.</div>
+      <div class="pill amber"><strong>Función general</strong>Todas las formas orales buscan la comunicación efectiva: transmitir, compartir y construir conocimiento mediante la palabra hablada.</div>
+    </div>
+    <div class="tip"><div class="lbl">Consejo clave</div><p>Diálogo = <em>intercambio y acuerdos</em>. Debate = <em>argumentación y pensamiento crítico</em>. Exposición = <em>transmitir información organizada</em>. El examen puede pedirte que relaciones una situación con su función.</p></div>
+  </div>
+
+</div><!-- fin teoría -->
+
+
+<!-- ========== 6.4.1 EXPOSICIÓN ========== -->
+<div class="section" id="tab-s1">
+  <div class="ex-header"><h2>Exposición oral</h2><span>6.4.1 · 5 ejercicios</span></div>
+
+  <div class="exercise" id="x1">
+    <div class="ex-meta"><div class="ex-n">1</div><span class="tag tag-rust">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál de los siguientes es un elemento de la <em>exposición oral</em>?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x1',false)"><span class="lt">A</span> El turno de la palabra entre participantes.</button>
+      <button class="opt" onclick="A(this,'x1',false)"><span class="lt">B</span> La contraposición de ideas entre dos posturas.</button>
+      <button class="opt" onclick="A(this,'x1',true)"><span class="lt">C</span> El control del tiempo para distribuir adecuadamente los puntos del tema.</button>
+      <button class="opt" onclick="A(this,'x1',false)"><span class="lt">D</span> La moderación entre participantes con posturas opuestas.</button>
+    </div>
+    <div class="fb" id="fb-x1"></div>
+  </div>
+
+  <div class="exercise" id="x2">
+    <div class="ex-meta"><div class="ex-n">2</div><span class="tag tag-rust">Identifica el elemento</span></div>
+    <p class="ex-q">Karla prepara sus diapositivas con imágenes, gráficas y mapas conceptuales para su presentación. ¿Qué elemento de la exposición oral está usando?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x2',false)"><span class="lt">A</span> Manejo de la voz.</button>
+      <button class="opt" onclick="A(this,'x2',true)"><span class="lt">B</span> Apoyos gráficos.</button>
+      <button class="opt" onclick="A(this,'x2',false)"><span class="lt">C</span> Control del tiempo.</button>
+      <button class="opt" onclick="A(this,'x2',false)"><span class="lt">D</span> Planeación del tema.</button>
+    </div>
+    <div class="fb" id="fb-x2"></div>
+  </div>
+
+  <div class="exercise" id="x3">
+    <div class="ex-meta"><div class="ex-n">3</div><span class="tag tag-rust">Identifica el elemento</span></div>
+    <p class="ex-q">Durante su exposición, Miguel habla muy rápido y en voz baja, lo que dificulta que el público lo entienda. ¿Qué elemento no está manejando correctamente?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x3',false)"><span class="lt">A</span> Uso del espacio.</button>
+      <button class="opt" onclick="A(this,'x3',false)"><span class="lt">B</span> Apoyos gráficos.</button>
+      <button class="opt" onclick="A(this,'x3',true)"><span class="lt">C</span> Manejo de la voz (volumen y velocidad).</button>
+      <button class="opt" onclick="A(this,'x3',false)"><span class="lt">D</span> Control del tiempo.</button>
+    </div>
+    <div class="fb" id="fb-x3"></div>
+  </div>
+
+  <div class="exercise" id="x4">
+    <div class="ex-meta"><div class="ex-n">4</div><span class="tag tag-rust">Identifica el elemento</span></div>
+    <p class="ex-q">Antes de su presentación, Sofía define el tema, el objetivo, el orden de los puntos y el perfil del público al que va dirigida. ¿En qué elemento de la exposición trabaja?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x4',true)"><span class="lt">A</span> Planeación de la exposición.</button>
+      <button class="opt" onclick="A(this,'x4',false)"><span class="lt">B</span> Apoyos gráficos.</button>
+      <button class="opt" onclick="A(this,'x4',false)"><span class="lt">C</span> Manejo de la voz.</button>
+      <button class="opt" onclick="A(this,'x4',false)"><span class="lt">D</span> Uso del espacio.</button>
+    </div>
+    <div class="fb" id="fb-x4"></div>
+  </div>
+
+  <div class="exercise" id="x5">
+    <div class="ex-meta"><div class="ex-n">5</div><span class="tag tag-rust">Opción múltiple</span></div>
+    <p class="ex-q">Un expositor se mueve por el espacio del salón, hace contacto visual con el público y usa gestos para enfatizar sus ideas. ¿Qué elemento de la exposición oral demuestra?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x5',false)"><span class="lt">A</span> Control del tiempo.</button>
+      <button class="opt" onclick="A(this,'x5',false)"><span class="lt">B</span> Planeación.</button>
+      <button class="opt" onclick="A(this,'x5',false)"><span class="lt">C</span> Manejo de la voz.</button>
+      <button class="opt" onclick="A(this,'x5',true)"><span class="lt">D</span> Uso del espacio y lenguaje corporal.</button>
+    </div>
+    <div class="fb" id="fb-x5"></div>
+  </div>
+</div>
+
+
+<!-- ========== 6.4.2 DIÁLOGO ========== -->
+<div class="section" id="tab-s2">
+  <div class="ex-header"><h2>Características del diálogo</h2><span>6.4.2 · 5 ejercicios</span></div>
+
+  <div class="exercise" id="x6">
+    <div class="ex-meta"><div class="ex-n">6</div><span class="tag tag-teal">Opción múltiple</span></div>
+    <p class="ex-q">¿Qué son las <em>preguntas detonadoras</em> en un diálogo?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x6',false)"><span class="lt">A</span> Preguntas con respuesta única de sí o no que cierran el tema.</button>
+      <button class="opt" onclick="A(this,'x6',true)"><span class="lt">B</span> Preguntas abiertas que inician o impulsan la reflexión y la conversación.</button>
+      <button class="opt" onclick="A(this,'x6',false)"><span class="lt">C</span> Preguntas que un moderador hace solo al inicio de un debate.</button>
+      <button class="opt" onclick="A(this,'x6',false)"><span class="lt">D</span> Preguntas de examen sobre el tema tratado.</button>
+    </div>
+    <div class="fb" id="fb-x6"></div>
+  </div>
+
+  <div class="exercise" id="x7">
+    <div class="ex-meta"><div class="ex-n">7</div><span class="tag tag-teal">Identifica la característica</span></div>
+    <p class="ex-q">En una conversación, cada estudiante espera a que el otro termine de hablar antes de dar su opinión. ¿Qué característica del diálogo se aplica?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x7',false)"><span class="lt">A</span> Preguntas detonadoras.</button>
+      <button class="opt" onclick="A(this,'x7',false)"><span class="lt">B</span> Intercambio de información.</button>
+      <button class="opt" onclick="A(this,'x7',true)"><span class="lt">C</span> Turno de la palabra.</button>
+      <button class="opt" onclick="A(this,'x7',false)"><span class="lt">D</span> Exposición de posturas.</button>
+    </div>
+    <div class="fb" id="fb-x7"></div>
+  </div>
+
+  <div class="exercise" id="x8">
+    <div class="ex-meta"><div class="ex-n">8</div><span class="tag tag-teal">Identifica la característica</span></div>
+    <p class="ex-q">La maestra pregunta: <em>"¿Creen que la tecnología ha mejorado o empeorado las relaciones humanas?"</em> y los alumnos comienzan a expresar sus ideas. ¿Qué característica del diálogo aplica la maestra?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x8',true)"><span class="lt">A</span> Pregunta detonadora, porque abre la reflexión y genera el diálogo.</button>
+      <button class="opt" onclick="A(this,'x8',false)"><span class="lt">B</span> Turno de la palabra, porque espera a que hablen los alumnos.</button>
+      <button class="opt" onclick="A(this,'x8',false)"><span class="lt">C</span> Intercambio de información, porque comparte sus ideas.</button>
+      <button class="opt" onclick="A(this,'x8',false)"><span class="lt">D</span> Exposición de postura, porque defiende una idea.</button>
+    </div>
+    <div class="fb" id="fb-x8"></div>
+  </div>
+
+  <div class="exercise" id="x9">
+    <div class="ex-meta"><div class="ex-n">9</div><span class="tag tag-teal">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál es la diferencia principal entre el <em>diálogo</em> y el <em>debate</em>?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x9',false)"><span class="lt">A</span> En el diálogo siempre hay un moderador y en el debate no.</button>
+      <button class="opt" onclick="A(this,'x9',true)"><span class="lt">B</span> El diálogo busca el intercambio y los acuerdos; el debate defiende posturas opuestas y argumenta para refutar al contrario.</button>
+      <button class="opt" onclick="A(this,'x9',false)"><span class="lt">C</span> El debate es informal y el diálogo es siempre formal.</button>
+      <button class="opt" onclick="A(this,'x9',false)"><span class="lt">D</span> En el diálogo se usan apoyos gráficos y en el debate no.</button>
+    </div>
+    <div class="fb" id="fb-x9"></div>
+  </div>
+
+  <div class="exercise" id="x10">
+    <div class="ex-meta"><div class="ex-n">10</div><span class="tag tag-teal">Identifica la característica</span></div>
+    <p class="ex-q">Durante un diálogo sobre el medio ambiente, cada participante aporta datos, experiencias y opiniones distintas sobre el tema. ¿Qué característica del diálogo se observa?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x10',false)"><span class="lt">A</span> Turno de la palabra.</button>
+      <button class="opt" onclick="A(this,'x10',false)"><span class="lt">B</span> Pregunta detonadora.</button>
+      <button class="opt" onclick="A(this,'x10',true)"><span class="lt">C</span> Intercambio de información.</button>
+      <button class="opt" onclick="A(this,'x10',false)"><span class="lt">D</span> Desarrollo de argumentos.</button>
+    </div>
+    <div class="fb" id="fb-x10"></div>
+  </div>
+</div>
+
+
+<!-- ========== 6.4.3 DEBATE ========== -->
+<div class="section" id="tab-s3">
+  <div class="ex-header"><h2>Elementos del debate</h2><span>6.4.3 · 5 ejercicios</span></div>
+
+  <div class="exercise" id="x11">
+    <div class="ex-meta"><div class="ex-n">11</div><span class="tag tag-blue">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál de los siguientes enunciados describe correctamente un <em>debate</em>?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x11',false)"><span class="lt">A</span> Dos personas conversan amigablemente sobre sus experiencias.</button>
+      <button class="opt" onclick="A(this,'x11',false)"><span class="lt">B</span> Una persona informa a su público usando diapositivas.</button>
+      <button class="opt" onclick="A(this,'x11',true)"><span class="lt">C</span> Dos o más participantes defienden posturas opuestas sobre un tema con argumentos ante un moderador.</button>
+      <button class="opt" onclick="A(this,'x11',false)"><span class="lt">D</span> Un grupo de estudiantes lee en voz alta un texto literario.</button>
+    </div>
+    <div class="fb" id="fb-x11"></div>
+  </div>
+
+  <div class="exercise" id="x12">
+    <div class="ex-meta"><div class="ex-n">12</div><span class="tag tag-blue">Identifica el elemento</span></div>
+    <p class="ex-q">En un debate sobre el uso obligatorio del uniforme escolar, un equipo dice: <em>"El uniforme fomenta la igualdad y elimina la discriminación por ropa"</em>, y el otro responde: <em>"Eso es falso; los uniformes no eliminan la discriminación, solo la disfrazan"</em>. ¿Qué elemento del debate se aplica?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x12',false)"><span class="lt">A</span> Exposición de posturas.</button>
+      <button class="opt" onclick="A(this,'x12',true)"><span class="lt">B</span> Contraposición de ideas (rebatir el argumento del equipo contrario).</button>
+      <button class="opt" onclick="A(this,'x12',false)"><span class="lt">C</span> Planeación de la exposición.</button>
+      <button class="opt" onclick="A(this,'x12',false)"><span class="lt">D</span> Turno de la palabra.</button>
+    </div>
+    <div class="fb" id="fb-x12"></div>
+  </div>
+
+  <div class="exercise" id="x13">
+    <div class="ex-meta"><div class="ex-n">13</div><span class="tag tag-blue">Identifica el elemento</span></div>
+    <p class="ex-q">Al inicio del debate, el equipo A declara: <em>"Estamos en contra de que los menores de 18 años usen redes sociales sin restricciones"</em>. ¿Qué elemento del debate es este?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x13',true)"><span class="lt">A</span> Exposición de postura (declaran su posición clara: en contra).</button>
+      <button class="opt" onclick="A(this,'x13',false)"><span class="lt">B</span> Desarrollo de argumentos.</button>
+      <button class="opt" onclick="A(this,'x13',false)"><span class="lt">C</span> Contraposición de ideas.</button>
+      <button class="opt" onclick="A(this,'x13',false)"><span class="lt">D</span> Pregunta detonadora.</button>
+    </div>
+    <div class="fb" id="fb-x13"></div>
+  </div>
+
+  <div class="exercise" id="x14">
+    <div class="ex-meta"><div class="ex-n">14</div><span class="tag tag-blue">Identifica el elemento</span></div>
+    <p class="ex-q">El equipo B afirma: <em>"Según estudios de la OMS, el 67% de los adolescentes que usan redes sociales más de 3 horas al día presentan síntomas de ansiedad"</em>. ¿Qué elemento del debate aplican?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x14',false)"><span class="lt">A</span> Exposición de postura.</button>
+      <button class="opt" onclick="A(this,'x14',false)"><span class="lt">B</span> Contraposición de ideas.</button>
+      <button class="opt" onclick="A(this,'x14',true)"><span class="lt">C</span> Desarrollo de argumentos (sustentan su postura con datos y evidencias).</button>
+      <button class="opt" onclick="A(this,'x14',false)"><span class="lt">D</span> Turno de la palabra.</button>
+    </div>
+    <div class="fb" id="fb-x14"></div>
+  </div>
+
+  <div class="exercise" id="x15">
+    <div class="ex-meta"><div class="ex-n">15</div><span class="tag tag-blue">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál de los siguientes elementos es exclusivo del debate y NO del diálogo?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x15',false)"><span class="lt">A</span> Turno de la palabra.</button>
+      <button class="opt" onclick="A(this,'x15',false)"><span class="lt">B</span> Intercambio de información.</button>
+      <button class="opt" onclick="A(this,'x15',true)"><span class="lt">C</span> Contraposición de ideas entre posturas opuestas.</button>
+      <button class="opt" onclick="A(this,'x15',false)"><span class="lt">D</span> Escucha activa entre participantes.</button>
+    </div>
+    <div class="fb" id="fb-x15"></div>
+  </div>
+</div>
+
+
+<!-- ========== 6.4.4 FUNCIONES ========== -->
+<div class="section" id="tab-s4">
+  <div class="ex-header"><h2>Funciones de las formas orales</h2><span>6.4.4 · 5 ejercicios</span></div>
+
+  <div class="exercise" id="x16">
+    <div class="ex-meta"><div class="ex-n">16</div><span class="tag tag-purple">Identifica la función</span></div>
+    <p class="ex-q">Un grupo de vecinos se reúne para discutir el problema de la basura en su colonia, escucharse mutuamente y encontrar una solución en común. ¿Qué forma oral y función se aplica?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x16',false)"><span class="lt">A</span> Debate, para desarrollar el pensamiento crítico.</button>
+      <button class="opt" onclick="A(this,'x16',false)"><span class="lt">B</span> Exposición oral, para transmitir información al público.</button>
+      <button class="opt" onclick="A(this,'x16',true)"><span class="lt">C</span> Diálogo, para intercambiar ideas y construir acuerdos colectivos.</button>
+      <button class="opt" onclick="A(this,'x16',false)"><span class="lt">D</span> Debate, para defender posturas opuestas sobre la basura.</button>
+    </div>
+    <div class="fb" id="fb-x16"></div>
+  </div>
+
+  <div class="exercise" id="x17">
+    <div class="ex-meta"><div class="ex-n">17</div><span class="tag tag-purple">Identifica la función</span></div>
+    <p class="ex-q">En clase de Ciencias, un estudiante presenta ante sus compañeros cómo funciona el sistema solar, usando una maqueta y explicaciones ordenadas. ¿Qué forma oral y función aplica?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x17',false)"><span class="lt">A</span> Diálogo, para intercambiar información con sus compañeros.</button>
+      <button class="opt" onclick="A(this,'x17',false)"><span class="lt">B</span> Debate, para defender la teoría heliocéntrica.</button>
+      <button class="opt" onclick="A(this,'x17',true)"><span class="lt">C</span> Exposición oral, para transmitir información organizada al público.</button>
+      <button class="opt" onclick="A(this,'x17',false)"><span class="lt">D</span> Diálogo, para plantear preguntas detonadoras al grupo.</button>
+    </div>
+    <div class="fb" id="fb-x17"></div>
+  </div>
+
+  <div class="exercise" id="x18">
+    <div class="ex-meta"><div class="ex-n">18</div><span class="tag tag-purple">Identifica la función</span></div>
+    <p class="ex-q">Dos equipos de estudiantes argumentan ante el grupo, uno a favor y otro en contra de la pena de muerte. ¿Cuál es la función principal de esta forma oral?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x18',false)"><span class="lt">A</span> Intercambiar información y llegar a un acuerdo.</button>
+      <button class="opt" onclick="A(this,'x18',false)"><span class="lt">B</span> Presentar un tema con apoyos visuales al público.</button>
+      <button class="opt" onclick="A(this,'x18',true)"><span class="lt">C</span> Desarrollar el pensamiento crítico y argumentativo analizando posturas opuestas.</button>
+      <button class="opt" onclick="A(this,'x18',false)"><span class="lt">D</span> Usar preguntas detonadoras para iniciar la reflexión.</button>
+    </div>
+    <div class="fb" id="fb-x18"></div>
+  </div>
+
+  <div class="exercise" id="x19">
+    <div class="ex-meta"><div class="ex-n">19</div><span class="tag tag-purple">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál es la función principal del <em>diálogo</em> como forma oral de la comunicación?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x19',false)"><span class="lt">A</span> Convencer al público de una idea mediante argumentos.</button>
+      <button class="opt" onclick="A(this,'x19',false)"><span class="lt">B</span> Presentar información de forma ordenada usando apoyos gráficos.</button>
+      <button class="opt" onclick="A(this,'x19',false)"><span class="lt">C</span> Defender una postura frente a la contraria ante un moderador.</button>
+      <button class="opt" onclick="A(this,'x19',true)"><span class="lt">D</span> Facilitar el intercambio de ideas, fomentar la escucha activa y construir acuerdos.</button>
+    </div>
+    <div class="fb" id="fb-x19"></div>
+  </div>
+
+  <div class="exercise" id="x20">
+    <div class="ex-meta"><div class="ex-n">20</div><span class="tag tag-purple">Opción múltiple</span></div>
+    <p class="ex-q">¿Cuál es la función que comparten <em>todas</em> las formas orales de la comunicación (diálogo, debate y exposición)?</p>
+    <div class="opts">
+      <button class="opt" onclick="A(this,'x20',false)"><span class="lt">A</span> Defender una postura con argumentos ante un público.</button>
+      <button class="opt" onclick="A(this,'x20',false)"><span class="lt">B</span> Usar preguntas detonadoras para generar reflexión.</button>
+      <button class="opt" onclick="A(this,'x20',false)"><span class="lt">C</span> Presentar información con apoyos visuales.</button>
+      <button class="opt" onclick="A(this,'x20',true)"><span class="lt">D</span> Comunicar, compartir y construir conocimiento mediante la palabra hablada.</button>
+    </div>
+    <div class="fb" id="fb-x20"></div>
+  </div>
+</div>
+
+
+<!-- ========== RESULTADO ========== -->
+<div class="section" id="tab-score">
+  <div class="score-wrap">
+    <div><span class="score-big" id="sc-n">0</span><span class="score-den"> / 20</span></div>
+    <p class="score-msg" id="sc-msg">Completa los ejercicios para ver tu resultado.</p>
+    <button class="reset-btn" onclick="resetAll()">↺ Reiniciar todo</button>
+  </div>
+  <div class="t-results" id="t-results"></div>
+</div>
+
+</main>
+
+<script>
+const D={},C={},N=20;
+const TM={
+  x1:'Exposición oral (6.4.1)',x2:'Exposición oral (6.4.1)',x3:'Exposición oral (6.4.1)',x4:'Exposición oral (6.4.1)',x5:'Exposición oral (6.4.1)',
+  x6:'Diálogo (6.4.2)',x7:'Diálogo (6.4.2)',x8:'Diálogo (6.4.2)',x9:'Diálogo (6.4.2)',x10:'Diálogo (6.4.2)',
+  x11:'Debate (6.4.3)',x12:'Debate (6.4.3)',x13:'Debate (6.4.3)',x14:'Debate (6.4.3)',x15:'Debate (6.4.3)',
+  x16:'Funciones (6.4.4)',x17:'Funciones (6.4.4)',x18:'Funciones (6.4.4)',x19:'Funciones (6.4.4)',x20:'Funciones (6.4.4)'
+};
+const FB={
+  x1:{ok:"Correcto. El control del tiempo es uno de los cinco elementos de la exposición oral: permite organizar cuánto tiempo dedicar a cada punto.",bad:"Incorrecto. El turno de la palabra pertenece al diálogo; la contraposición al debate. El control del tiempo es el elemento correcto de la exposición oral."},
+  x2:{ok:"Correcto. Las diapositivas, imágenes y gráficas son apoyos gráficos: materiales visuales que complementan la exposición.",bad:"Incorrecto. Preparar diapositivas con imágenes y gráficas corresponde al elemento de apoyos gráficos de la exposición oral."},
+  x3:{ok:"Correcto. Hablar muy rápido y en voz baja afecta el manejo de la voz: volumen, tono y velocidad son parte de este elemento.",bad:"Incorrecto. El volumen y la velocidad con que se habla son parte del manejo de la voz, no del espacio ni del tiempo."},
+  x4:{ok:"Correcto. Definir el tema, el objetivo y el orden antes de presentar es la etapa de planeación de la exposición.",bad:"Incorrecto. Organizar el contenido, el objetivo y el orden antes de exponer corresponde a la planeación de la exposición."},
+  x5:{ok:"Correcto. Moverse, hacer contacto visual y usar gestos son elementos del uso del espacio y el lenguaje corporal en la exposición.",bad:"Incorrecto. El movimiento, el contacto visual y los gestos forman parte del uso del espacio en la exposición oral."},
+  x6:{ok:"Correcto. Las preguntas detonadoras son abiertas: no tienen una única respuesta y sirven para iniciar o impulsar la reflexión y el diálogo.",bad:"Incorrecto. Las preguntas detonadoras son abiertas y generan reflexión. No son de sí/no ni exclusivas del debate."},
+  x7:{ok:"Correcto. Esperar a que el otro termine de hablar antes de intervenir es el turno de la palabra: garantiza orden y respeto en el diálogo.",bad:"Incorrecto. Respetar el momento en que cada participante habla es el turno de la palabra, no el intercambio ni la pregunta detonadora."},
+  x8:{ok:"Correcto. La pregunta de la maestra es abierta y provoca que los alumnos reflexionen y compartan ideas → es una pregunta detonadora.",bad:"Incorrecto. Al lanzar una pregunta abierta que genera reflexión y conversación, la maestra usa una pregunta detonadora."},
+  x9:{ok:"Correcto. El diálogo busca intercambiar ideas y llegar a acuerdos; el debate busca defender una postura y refutar la contraria.",bad:"Incorrecto. La diferencia clave es el objetivo: diálogo = intercambio y acuerdo; debate = defensa de postura opuesta y refutación."},
+  x10:{ok:"Correcto. Cuando cada participante aporta datos, experiencias y opiniones al tema, se está dando el intercambio de información.",bad:"Incorrecto. Cuando los participantes aportan datos y opiniones al tema, están realizando el intercambio de información."},
+  x11:{ok:"Correcto. El debate implica participantes con posturas opuestas, argumentos y generalmente un moderador.",bad:"Incorrecto. El debate siempre involucra posturas opuestas y argumentación. La conversación amigable es diálogo; presentar con diapositivas es exposición oral."},
+  x12:{ok:"Correcto. Cuando un equipo refuta o responde críticamente el argumento del otro, se aplica la contraposición de ideas.",bad:"Incorrecto. Refutar o responder críticamente al argumento del equipo contrario es la contraposición de ideas, no la exposición de posturas."},
+  x13:{ok:"Correcto. Declarar la posición inicial (a favor o en contra) al inicio del debate es la exposición de postura.",bad:"Incorrecto. Cuando un equipo declara su posición inicial (en contra de…), está haciendo la exposición de su postura."},
+  x14:{ok:"Correcto. Presentar datos, estadísticas o evidencias para sustentar la postura es el desarrollo de argumentos.",bad:"Incorrecto. Usar datos y evidencias para respaldar la postura es el desarrollo de argumentos, no la contraposición."},
+  x15:{ok:"Correcto. La contraposición de ideas (enfrentamiento entre posturas opuestas) es exclusiva del debate; el diálogo no requiere posturas contrarias.",bad:"Incorrecto. La contraposición de ideas implica posturas opuestas, lo cual es exclusivo del debate. El turno de palabra e intercambio existen en ambos."},
+  x16:{ok:"Correcto. Reunirse para escucharse y construir soluciones en común es la función del diálogo: intercambio de ideas y construcción de acuerdos.",bad:"Incorrecto. Buscar acuerdos en conjunto es la función del diálogo, no del debate (que no busca acuerdos sino ganar el argumento)."},
+  x17:{ok:"Correcto. Presentar información organizada ante un público, con apoyo de materiales, es la función de la exposición oral.",bad:"Incorrecto. Presentar un tema organizado ante compañeros con una maqueta es una exposición oral, cuya función es transmitir información."},
+  x18:{ok:"Correcto. El debate desarrolla el pensamiento crítico al obligar a analizar, argumentar y refutar posturas opuestas.",bad:"Incorrecto. El debate sirve para desarrollar el pensamiento crítico y la argumentación, no para llegar a acuerdos ni presentar con apoyos visuales."},
+  x19:{ok:"Correcto. La función del diálogo es facilitar el intercambio igualitario de ideas, la escucha activa y la construcción de acuerdos.",bad:"Incorrecto. Defender posturas es función del debate; presentar información organizada es de la exposición. El diálogo facilita el intercambio y los acuerdos."},
+  x20:{ok:"Correcto. La función que comparten todas es comunicar y construir conocimiento mediante la palabra hablada, aunque cada una lo hace de forma diferente.",bad:"Incorrecto. La función compartida de todas las formas orales es comunicar, compartir y construir conocimiento mediante la palabra hablada."}
+};
+
+function A(btn,id,ok){
+  if(D[id])return;
+  D[id]=true;C[id]=ok;
+  const ex=document.getElementById(id);
+  ex.querySelectorAll('.opt').forEach(o=>{o.classList.add('dis');o.onclick=null});
+  btn.classList.add(ok?'cor':'wrg');
+  if(!ok)ex.querySelectorAll('.opt').forEach(o=>{
+    const oc=o.getAttribute('onclick')||'';
+    if(oc.includes(',true)'))o.classList.add('cor');
+  });
+  ex.classList.add(ok?'ok':'bad');
+  const fb=document.getElementById('fb-'+id);
+  fb.style.display='block';
+  fb.className='fb '+(ok?'ok':'bad');
+  fb.innerHTML='<span class="ic">'+(ok?'✓':'✗')+'</span> '+(ok?FB[id].ok:FB[id].bad);
+  upd();
+}
+
+function upd(){
+  const dn=Object.keys(D).length,cr=Object.values(C).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width=Math.round(dn/N*100)+'%';
+  document.getElementById('prog-lbl').textContent=dn+' / '+N+' completados';
+  document.getElementById('score-disp').textContent=cr+' correctos';
+  document.getElementById('sc-n').textContent=cr;
+  const msgs=['¡Ánimo, sigue practicando!','Vas avanzando. Repasa la teoría.','¡Buen trabajo! Ya dominas varios conceptos.','¡Casi perfecto! Un último repaso y listo.','¡Excelente! Estás listo para el examen.'];
+  document.getElementById('sc-msg').textContent=msgs[cr<7?0:cr<11?1:cr<15?2:cr<20?3:4];
+  renderR();
+}
+
+function renderR(){
+  const tm={};
+  for(const[k,v]of Object.entries(TM)){
+    if(!tm[v])tm[v]={t:0,d:0,c:0};
+    tm[v].t++;
+    if(D[k]){tm[v].d++;if(C[k])tm[v].c++;}
+  }
+  const cont=document.getElementById('t-results');
+  cont.innerHTML='';
+  for(const[name,data]of Object.entries(tm)){
+    const pct=data.d>0?Math.round(data.c/data.d*100):0;
+    const cls=pct>=75?'gr':pct>=50?'md':'lw';
+    const r=document.createElement('div');
+    r.className='t-row';
+    r.innerHTML=`<div style="flex:1"><div class="t-name">${name.split(' (')[0]}</div><div class="t-sub">${name.match(/\(([^)]+)\)/)?.[1]||''}</div></div><div class="t-track"><div class="t-fill ${cls}" style="width:${pct}%"></div></div><div class="t-sc ${cls}">${data.c}/${data.d}</div>`;
+    cont.appendChild(r);
+  }
+}
+
+function showTab(n,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(n==='score')upd();
+  window.scrollTo(0,0);
+}
+
+function resetAll(){
+  Object.keys(D).forEach(k=>{delete D[k];delete C[k]});
+  document.querySelectorAll('.exercise').forEach(e=>e.classList.remove('ok','bad'));
+  document.querySelectorAll('.opt').forEach(o=>{
+    o.classList.remove('cor','wrg','dis');
+    const oc=o.getAttribute('onclick');
+    if(!oc)return;
+    const m=oc.match(/A\(this,'(x\d+)',(true|false)\)/);
+    if(m)o.onclick=function(){A(this,m[1],m[2]==='true')};
+  });
+  document.querySelectorAll('.fb').forEach(f=>{f.style.display='none';f.className='fb'});
+  document.getElementById('prog-fill').style.width='0%';
+  document.getElementById('prog-lbl').textContent='0 / '+N+' completados';
+  document.getElementById('score-disp').textContent='0 correctos';
+  document.getElementById('sc-n').textContent='0';
+  document.getElementById('sc-msg').textContent='Completa los ejercicios para ver tu resultado.';
+  document.getElementById('t-results').innerHTML='';
+}
+</script>
+</body>
+</html>
